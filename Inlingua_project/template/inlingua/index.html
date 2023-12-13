@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+  Home page | Inlingua
+{% endblock %}
+{% block style %}
+{% endblock %}
+
+{% block container %}
+
+<div class="container mt-5">
+    {% include 'inc/message.html' %}
+    {% if user_details.role_id.Name == 'Admin' %}
+        <h1>Im Admin</h1>
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Role</label>
+                <select class="form-control w-50" id="exampleFormControlSelect1" name="roles">
+                    <option value="Student">Student</option>
+                    <option value="Trainer">Trainer</option>
+                    <option value="Trainer Head">Trainer Head</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Accountant">Accountant</option>
+                    <option value="Business Head">Business Head</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>            
+            <div class="form-group mt-3">
+              <label for="exampleInputEmail1">User Name</label>
+              <input type="text" class="form-control w-50" id="exampleInputEmail1" aria-describedby="emailHelp" name="username">
+            </div>
+            <div class="form-group mt-3">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control w-50" id="exampleInputPassword1" name="password1">
+            </div>
+            <div class="form-group mt-3">
+                <label for="exampleInputPassword1">Conform Password</label>
+                <input type="password" class="form-control w-50" id="exampleInputPassword1" name="password2">
+              </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </form>
+    {% elif user_details.role_id.Name == 'Business Head' %}
+        <h1>Im Business Head</h1>
+    {% elif user_details.role_id.Name == 'Accountant' %}
+        <h1>Im Accountant</h1>
+    {% elif user_details.role_id.Name == 'Manager' %}
+        <h1>Im Student</h1>
+    {% elif user_details.role_id.Name == 'Trainer Head' %}
+        <h1>Im Manager</h1>
+    {% elif user_details.role_id.Name == 'Trainer' %}
+        <h1>Im Trainer</h1>
+    {% elif user_details.role_id.Name == 'Student' %}
+        <h1>Im Student</h1>
+    
+    {% else %}
+        <h1>Unknown Role</h1>
+    {% endif %}
+</div>
+
+
+{% endblock %}
