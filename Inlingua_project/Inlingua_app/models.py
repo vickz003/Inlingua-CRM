@@ -30,6 +30,9 @@ class Languages(models.Model):
     UpdatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.Name
+
 class Level(models.Model):
     ID = models.AutoField(primary_key=True)
     Code = models.CharField(max_length=2)
@@ -39,6 +42,9 @@ class Level(models.Model):
     UpdatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return self.Name
+
 class Courses(models.Model):
     ID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=100)
@@ -47,10 +53,15 @@ class Courses(models.Model):
     LanguageID = models.ForeignKey(Languages, on_delete=models.CASCADE)
     LevelID = models.ForeignKey(Level, on_delete=models.CASCADE)
     Cost = models.IntegerField()
+    Course_metirials = models.FileField(blank=True, null=True)
+    Course_status = models.IntegerField(default=0)
     CreatedDate = models.DateTimeField(default=timezone.now)
     CreatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.Name
 
 class PaymentTypes(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -90,6 +101,8 @@ class UserRoles(models.Model):
 
 class User(AbstractUser):
     name = models.CharField(max_length=225, blank=True, null=True)
+    user_img = models.ImageField(upload_to='static/img/uploads/', blank=True, null=True)
+    Course_details = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True, blank=True)
     created_by = models.CharField(max_length=255)
     updated_by = models.CharField(max_length=255, null=True, blank=True)
     updated_date = models.DateTimeField(null=True, blank=True)

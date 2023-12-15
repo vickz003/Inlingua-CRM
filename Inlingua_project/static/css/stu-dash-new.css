@@ -12653,33 +12653,33 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .german-img {
-  background-image: url('img/My-course-german.jpg');
+  background-image: url('../img/imgs/My-course-german.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .attendance-img {
-  background-image: url('img/attendance.jpg');
+  background-image: url('../img/imgs/attendance.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .study-img {
-  background-image: url('img/material.jpg');
+  background-image: url('../img/imgs/material.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 
 }
 
 .duration-img {
-  background-image: url('img/duration.jpg');
+  background-image: url('../img/imgs/duration.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 
 }
 
 .slot-img {
-  background-image: url('img/time-slot.jpg');
+  background-image: url('../img/imgs/time-slot.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 

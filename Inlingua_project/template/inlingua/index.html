@@ -9,9 +9,9 @@
 
 {% block container %}
 
-<div class="container mt-5">
-    {% include 'inc/message.html' %}
-    {% if user_details.role_id.Name == 'Admin' %}
+<div class="container-fluid p-0">
+    
+    {% if user.role_id.Name == 'Admin' %}
         <h1>Im Admin</h1>
         <form action="{% url 'register' %}" method="POST">
             {% csrf_token %}
@@ -42,18 +42,193 @@
               </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
           </form>
-    {% elif user_details.role_id.Name == 'Business Head' %}
+    {% elif user.role_id.Name == 'Business Head' %}
         <h1>Im Business Head</h1>
-    {% elif user_details.role_id.Name == 'Accountant' %}
+    {% elif user.role_id.Name == 'Accountant' %}
         <h1>Im Accountant</h1>
-    {% elif user_details.role_id.Name == 'Manager' %}
+    {% elif user.role_id.Name == 'Manager' %}
         <h1>Im Student</h1>
-    {% elif user_details.role_id.Name == 'Trainer Head' %}
+    {% elif user.role_id.Name == 'Trainer Head' %}
         <h1>Im Manager</h1>
-    {% elif user_details.role_id.Name == 'Trainer' %}
+    {% elif user.role_id.Name == 'Trainer' %}
         <h1>Im Trainer</h1>
-    {% elif user_details.role_id.Name == 'Student' %}
-        <h1>Im Student</h1>
+    {% elif user.role_id.Name == 'Student' %}
+
+        <div id="wrapper">
+
+            {% include 'inc/sidebar.html' %}
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                {% include 'inc/message.html' %}
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between m-4 shadow p-2" style="border-radius: 25px;">
+                    <div class="row d-flex" >
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <img src="{% static 'img/imgs/L1.png' %}" class="w-100">
+                        </div>
+                    </div>
+                    <div class="dropdown mr-2">
+                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img
+                            {% if user_details.user_img %}
+                                src="{{ user_details.user_img.url }}"
+                            {% else %}
+                                src="{% static 'img/imgs/profile icon.jpg' %}"
+                            {% endif %}
+                            alt="" width="32" height="32" class="rounded-circle me-2">
+
+                            <strong>{{ user.username }}</strong>
+                        </a>                        
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                          <li><a class="dropdown-item" href="#">New project...</a></li>
+                          <li><a class="dropdown-item" href="#">Settings</a></li>
+                          <li><a class="dropdown-item" href="#">Profile</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <!-- first Row -->
+                <div class="row m-2">
+                    <!-- Student Language -->
+                    <div class="col-xl-14 col-md-12 mb-4 h-30">
+                        <div class="card-body german-img shadow">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-lg font-weight-bold text-dark text-Normal m-3">
+                                        My Course</div>
+                                    <div class="h1 mb-3 font-weight-bold  text-dark-800 m-3">{{cources.Name}} - {{level.Code}}</div>
+                                    <div class="m-3">
+                                        <h4 class="small font-weight-bold">Class Progress<span
+                                                class="float-center"> {{cources.Course_status}} %</span></h4>
+
+                                        <progress
+                                            class="progress bg-dark-stu w-50"
+                                            value="{{cources.Course_status}}"
+                                            max="100"
+                                            aria-describedby="progressId"
+                                        >
+                                            <div class="progress">
+                                                <span class="progress-bar" style="width: 50%;"></span>
+                                            </div>
+                                        </progress>
+                                        
+                                    </div>
+                                    <button class="btn btn-dark m-3 mb-5"> Today class Button</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+    
+                <div class="container pr-3">
+                    <div class="card study-img ">
+                        <div class="card-header" style="background-color: transparent !important;">
+                            <h3 class="font-weight-bold text-dark pt-3">Study Material</h3>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Introduction to the Course</h5>
+                            <p class="card-text">
+                                In this section, you'll find the introductory material for the course.
+                                Get started with the basics and build a strong foundation.
+                            </p>
+                            <button class="btn btn-dark">Download</button>
+                        </div>
+                    </div>
+                </div>                
+
+
+
+
+                <!-- Second Row -->
+                <div class="row m-2 border-dark">
+                    
+
+                    <div class="col-lg-6 mb-4">
+    
+                        <!-- Illustrations -->
+                        <div class="card-body justify-content-center align-items-center slot-img">
+                            <div class="img-ico1 float-left mr-3">
+                                <img src="{% static 'img/imgs/duration.png' %}">
+                            </div>
+                            <div class="duration">
+                                <h3 class="text-dark font-weight-bold">Time Slot</h3>
+                                <h6 class="text-dark font-weight-bold">10:00 AM - 12:00 PM</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-lg-6 mb-4">
+    
+                        <!-- Illustrations -->
+                        <div class="card-body justify-content-center align-items-center slot-img">
+                            <div class="img-ico1 float-left mr-3">
+                                <img src="{% static 'img/imgs/duration.png' %}">
+                            </div>
+                            <div class="duration">
+                                <h3 class="text-dark font-weight-bold">Study Meterial</h3>
+                                <h6 class="text-dark font-weight-bold">10:00 AM - 12:00 PM</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+    
+    
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        </div>
+        <!-- End of Page Wrapper -->
+    
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+    
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
+    
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
+    
+        <script src="jquery-3.1.1.min.js"></script>
+        <script src="jquery.paroller.min.js"></script>
+
+
     
     {% else %}
         <h1>Unknown Role</h1>

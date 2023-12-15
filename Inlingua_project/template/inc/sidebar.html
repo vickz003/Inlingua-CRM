@@ -1,0 +1,46 @@
+{% load static %}
+
+<!-- Sidebar -->
+            <ul class="navbar-nav bg-dark-stu sidebar sidebar-dark" id="Sidebar" style="position: sticky; top: 0;">
+    
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+                    <span class="m-2 text-danger">Hi Student,</span>
+                </a>
+                
+                <span class="date d-flex align-items-center justify-content-center mt-0">
+                    <script>
+                        var currentDate = new Date().toLocaleDateString('en-GB'); // 'en-GB' represents the British English locale which uses the "DD-MM-YYYY" format
+                        document.write(currentDate);
+                    </script>
+                </span>
+                
+    
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+    
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">
+                        <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
+                        <img class="w-10" src="{% static 'img/imgs/time-slot.png' %}">
+                        <span class="ml-1">Dashboard</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+                <!--nav bar item new-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
+                        <img class="w-10" src="{% static 'img/imgs/Course-white.png' %}">
+                        <span class="ml-1">Dashboard</span></a>
+                </li>
+                <hr class="sidebar-divider">
+    
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+    
+            </ul>
+            <!-- End of Sidebar -->
