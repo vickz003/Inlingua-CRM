@@ -51,6 +51,10 @@ class Courses(models.Model):
     Description = models.CharField(max_length=255)
     Duration = models.IntegerField()
     LanguageID = models.ForeignKey(Languages, on_delete=models.CASCADE)
+    StartDate = models.DateField(null=True, blank=True)
+    EndtDate = models.DateField(null=True, blank=True)
+    StartTime = models.TimeField(null=False, blank=False)
+    EndTime = models.TimeField(null=False, blank=False)
     LevelID = models.ForeignKey(Level, on_delete=models.CASCADE)
     Cost = models.IntegerField()
     Course_metirials = models.FileField(blank=True, null=True)
@@ -101,7 +105,7 @@ class UserRoles(models.Model):
 
 class User(AbstractUser):
     name = models.CharField(max_length=225, blank=True, null=True)
-    user_img = models.ImageField(upload_to='static/img/uploads/', blank=True, null=True)
+    user_img = models.ImageField(upload_to='static/img/uploads/Profiles', blank=True, null=True)
     Course_details = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True, blank=True)
     created_by = models.CharField(max_length=255)
     updated_by = models.CharField(max_length=255, null=True, blank=True)
