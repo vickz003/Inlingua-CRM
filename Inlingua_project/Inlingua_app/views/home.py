@@ -1,13 +1,42 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from Inlingua_app.models import User
+from Inlingua_app.models import User, Courses, Level, Languages, TrainingStaff, TrainerQualifications, TrainingBatches, StudentDetails
 
 def home(request):
-    if not request.user.is_authenticated:
-        return redirect('custom_login')
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
 
-    user_id = request.user.id
-    user_details = User.objects.get(id=user_id)
-    return render(request, 'inlingua/index.html', {'user_details': user_details})
-
-
+        if user.is_staff:
+            if user.is_superuser:
+                return render(request, 'inlingua/index.html')
+                # Handle superuser logic here (if needed)
+            else:
+                training_staff = TrainingStaff.objects.get(LoginId=user)
+                trainer_qualifications = TrainerQualifications.objects.get(TrainerId=training_staff)
+                training_batches = TrainingBatches.objects.filter(TrainerId=training_staff)
+                return render(request, 'inlingua/index.html', {
+                    'user': user,
+                    'training_staff': training_staff,
+                    'trainer_qualifications': trainer_qualifications,
+                    'training_batches': training_batches,
+                })
+                
+        elif user.is_active:
+            student_details = StudentDetails.objects.get(StudentID=user)
+            course_details = Courses.objects.get(Name=student_details.BatchID.Course_details)
+            level = course_details.LevelID
+            language = course_details.LanguageID
+            return render(request, 'inlingua/index.html', {
+                'user': user,
+                'student_details': student_details,
+                'course_details': course_details,
+                'level': level,
+                'language': language,
+            })
+        else:
+            messages.error(request, "Account is inactive.")
+            return render(request, 'inlingua/index.html')
+    else:
+        messages.error(request, "Your account has been logged out. Please log in.")
+        return redirect('login')

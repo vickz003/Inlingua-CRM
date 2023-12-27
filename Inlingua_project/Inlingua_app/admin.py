@@ -4,7 +4,8 @@ from django.contrib import admin
 from .models import (
     Languages, Level, Courses, PaymentTypes, Payments,
     UserRoles, User, ManagementStaff, TrainingStaff, TrainerQualifications,
-    ProofOfIdentty, TrainingBatches, StudentBatchAllocation, CourseStatus
+    ProofOfIdentty, TrainingBatches, StudentBatchAllocation, CourseStatus,
+    StudentDetails, StudentStudyMetirials
 )
 
 @admin.register(Languages)
@@ -43,9 +44,18 @@ class ManagementStaffAdmin(admin.ModelAdmin):
 class TrainingStaffAdmin(admin.ModelAdmin):
     pass
 
+@admin.register(StudentStudyMetirials)
+class StudentStudyMetirialsAdmin(admin.ModelAdmin):
+    list_display = ()
+
 @admin.register(TrainerQualifications)
 class TrainerQualificationsAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('LanguageID',)
+
+@admin.register(StudentDetails)
+class StudentDetailsAdmin(admin.ModelAdmin):
+    list_display = ('StudentID',)
+    
 
 @admin.register(ProofOfIdentty)
 class ProofOfIdenttyAdmin(admin.ModelAdmin):
