@@ -24,15 +24,12 @@ def home(request):
                 
         elif user.is_active:
             student_details = StudentDetails.objects.get(StudentID=user)
-            course_details = Courses.objects.get(Name=student_details.BatchID.Course_details)
-            level = course_details.LevelID
-            language = course_details.LanguageID
+            training_batches = TrainingBatches.objects.get(ID = student_details.BatchID.ID)
+            print(training_batches.ID)
             return render(request, 'inlingua/index.html', {
                 'user': user,
                 'student_details': student_details,
-                'course_details': course_details,
-                'level': level,
-                'language': language,
+                'training_batches':training_batches,
             })
         else:
             messages.error(request, "Account is inactive.")
