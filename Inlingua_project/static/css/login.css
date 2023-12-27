@@ -1,50 +1,42 @@
-.container-form{
-    margin-top: 23% !important;
-    margin-left: 15%;
+.login-page{
+    height: 100vh;
+    width: 100vw;
+    background-image: url(../img/imgs/inling.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-.container-form .msg-box .message-container{
-    position: absolute;
-    top: -100px;
+.login-container{
+    margin-top: 100px;
 }
-.container-form .msg-box form{
-    margin-top: 3rem;
-}
-.container-form .msg-box p{
-    color: #FFF;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 400;
-    line-height:25px;
-}
-.container-form .msg-box h3{
-    color: #FFF;
-    font-size: 62px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-.container-form .msg-box form .input-container{
-    width: 50%;
-    margin-top: 15px;
-    height: 40px;
+.login-container form .input-container{
     background-color: #fff;
-    border-radius: 50px;
+    margin-bottom: 10px;
+    height: 2.5rem;
+    border-radius: 20px;
+    position: relative;
+    
 }
-
-.container-form .msg-box form .input-container input{
-    width: 94%;
+.login-container form .input-container input,
+.login-container form .input-container button{
+    width: 100%;
     height: 100%;
+    border-radius: 20px;
     outline: none;
-    border-radius: 50px;
     border: none;
     padding: 0 20px;
 }
-.container-form .msg-box form .input-container .submit{
+.login-container form .input-container button{
     background-color: #FF751A;
-    width: 100%;
     color: #FFF;
 }
+/* media code */
+@media screen and (max-width: 640px){
+    .login-container{
+        margin-top: 10px;
+    }
+}
+
 
 /* -------------------------------------------------------------- */
 /* ------------------------- Home page Style---------------------- */
@@ -102,22 +94,27 @@
     line-height: normal;
 }
 
-.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild{
+.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild,
+.profile-container .row .col-lg-8 .progress-card .row .col-12 .container-fuild
+{
     background-color: #F0F0F0;
     padding: 40px ;
     border-radius: 20px;
     width: 100%;
 }
 
-.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild .contant{
+.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild .contant,
+profile-container .row .col-lg-8 .progress-card .row .col-12 .container-fuild .contant{
     width: fit-content;
     padding: 8px;
     border-radius: 10px;
 }
-.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild .contant img{
+.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild .contant img,
+.profile-container .row .col-lg-8 .progress-card .row .col-12 .container-fuild .contant img{
     width: 30px;
 }
-.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild p{
+.profile-container .row .col-lg-8 .progress-card .row .col-lg-4 .container-fuild p,
+.profile-container .row .col-lg-8 .progress-card .row .col-12 .container-fuild p{
     font-weight: bold;
     color: #6C6C6C;
 }

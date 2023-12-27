@@ -44,6 +44,9 @@ class Level(models.Model):
 
     def __str__(self):
         return self.Name
+    
+
+    
 
 class Courses(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -63,7 +66,7 @@ class Courses(models.Model):
     CreatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255)
-
+    
     def __str__(self):
         return self.Name
 
@@ -106,7 +109,6 @@ class UserRoles(models.Model):
 class User(AbstractUser):
     name = models.CharField(max_length=225, blank=True, null=True)
     user_img = models.ImageField(upload_to='static/img/uploads/Profiles', blank=True, null=True)
-    Course_details = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True, blank=True)
     created_by = models.CharField(max_length=255)
     updated_by = models.CharField(max_length=255, null=True, blank=True)
     updated_date = models.DateTimeField(null=True, blank=True)
@@ -153,6 +155,9 @@ class TrainingStaff(models.Model):
     UpdatedBy = models.CharField(max_length=255, null=True, blank=True)
     UpdatedDate = models.DateTimeField(null=True, blank=True)
 
+    def __str__(self):
+        return self.Name
+
 class TrainerQualifications(models.Model):
     ID = models.AutoField(primary_key=True)
     LanguageID = models.ForeignKey(Languages, on_delete=models.CASCADE)
@@ -166,6 +171,8 @@ class TrainerQualifications(models.Model):
     UpdatedDate = models.DateTimeField(null=True, blank=True)
     TrainerId = models.ForeignKey(TrainingStaff, on_delete=models.CASCADE)
 
+
+
 class ProofOfIdentty(models.Model):
     ID = models.AutoField(primary_key=True)
     Type = models.CharField(max_length=255)
@@ -178,6 +185,8 @@ class ProofOfIdentty(models.Model):
 class TrainingBatches(models.Model):
     ID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=255)
+    Course_details = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True, blank=True)
+    TrainerId = models.ForeignKey(TrainingStaff, on_delete=models.CASCADE, null=True, blank=True)
     MeetingURL = models.CharField(max_length=500)
     StartDate = models.DateTimeField()
     EndDate = models.DateTimeField()
@@ -190,10 +199,21 @@ class TrainingBatches(models.Model):
     UpdatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.Name
+
 class StudentBatchAllocation(models.Model):
     ID = models.AutoField(primary_key=True)
-    StudentID = models.CharField(max_length=255)
     TrainerID = models.ForeignKey(TrainingStaff, on_delete=models.CASCADE)
+    BatchID = models.ForeignKey(TrainingBatches, on_delete=models.CASCADE)
+    CreatedBy = models.CharField(max_length=255)
+    CreatedDate = models.DateTimeField(default=timezone.now)
+    UpdatedBy = models.CharField(max_length=255, null=True, blank=True)
+    UpdatedDate = models.DateTimeField(null=True, blank=True)
+
+class StudentDetails(models.Model):
+    ID = models.AutoField(primary_key=True)
+    StudentID = models.ForeignKey(User, on_delete=models.CASCADE)
     BatchID = models.ForeignKey(TrainingBatches, on_delete=models.CASCADE)
     CreatedBy = models.CharField(max_length=255)
     CreatedDate = models.DateTimeField(default=timezone.now)
@@ -209,3 +229,14 @@ class CourseStatus(models.Model):
     CreatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
+
+class StudentStudyMetirials(models.Model):
+    StudyMaterialID = models.AutoField(primary_key=True)
+    CourseID = models.ForeignKey(Courses, on_delete=models.CASCADE,null=True,blank=False)
+    MaterialType =  models.CharField(max_length=100)
+    File = models.FileField(upload_to='studymaterials')
+    CreatedDate = models.DateTimeField(auto_now_add=True)
+    UploadedBy = models.ForeignKey(User, on_delete=models.CASCADE, related_name='uploaded_student_studymaterials')
+    createdby = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_student_studymaterials')
+    uploadesdate = models.DateTimeField(auto_now_add=True)
+    
