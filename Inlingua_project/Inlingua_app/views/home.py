@@ -21,7 +21,7 @@ def home(request):
                     'trainer_qualifications': trainer_qualifications,
                     'training_batches': training_batches,
                 })
-                
+        # Stident details
         elif user.is_active:
             student_details = StudentDetails.objects.get(StudentID=user)
             training_batches = TrainingBatches.objects.get(ID = student_details.BatchID.ID)
