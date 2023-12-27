@@ -1,5 +1,6 @@
 from django.urls import path
-from Inlingua_app.views import login, home, register, logout, batchdetails,password_views
+from Inlingua_app.views import login, home, register, logout, batchdetails
+from django.contrib.auth import views as password_views
 
 
 urlpatterns = [
