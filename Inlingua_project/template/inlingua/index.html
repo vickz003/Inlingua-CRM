@@ -41,17 +41,19 @@ Home page | Inlingua
     </div>
 
     <!-- Modal view batch-->
+    {% if user.is_staff %}
     <div class="container msg-box-open" id="view-batch-container" style="position: absolute; min-width: 100vw; min-height: 100vh; display: flex; justify-content: center; align-items: center; top: 0; left: 0;">
         <div class="col-12 col-lg-10 message-box">
             <div class="mb-3 heading d-flex align-items-center justify-content-between">
                 <h3>All Batches</h3>
                 <i class='bx bx-x' id="close_btn_2"></i>
             </div>
-            {% for Training_batch in Training_batches %}
+            {% for Training_batch in training_batches %}
+            
             <div class="container mt-3 bg-white">
-                <div class="row" style="border-radius: 20px; background-color: #F0F0F0;">
-                    <div class="col-12 col-lg-5" style="padding-left: 0;">
-                        <div class="bg-dark d-flex align-items-center justify-content-between" style="border-radius: 20px; padding: 25px 50px;">
+                <div class="row bg-dark" style="border-radius: 20px;">
+                    <div class="col-12 col-lg-5 bg-dark" style="border-radius: 20px; padding-left: 0;">
+                        <div class="bg-dark" style="border-radius: 20px; padding: 25px 50px;">
                             <div>
                                 <h3 class="text-white">{{Training_batch.Name}}</h3>
                                 <p class="m-0 text-white">{{Training_batch.Course_details.LanguageID.Name}} {{Training_batch.Course_details.LevelID.Code}}</p>
@@ -83,8 +85,10 @@ Home page | Inlingua
                     </div>
                     <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center">
                         <div>
-                            <p class="m-0">Class Duration : {{ Training_batch.Course_details.StartDate |date:"d-m-Y" }} - {{ Training_batch.Course_details.StartDate |date:"d-m-Y" }}</p>
-                            <p class="m-0">Session Time : {{ Training_batch.Course_details.StartTime |time:"g.i A" }} - {{ Training_batch.Course_details.EndTime |time:"g.i A" }}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;">Batch ID </span>: {{Training_batch.ID}}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;" >Language</span>  : {{Training_batch.Course_details.LanguageID.Name}}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;" >Class Duration</span>  : {{ Training_batch.Course_details.StartDate |date:"d-m-Y" }} - {{ Training_batch.Course_details.StartDate |date:"d-m-Y" }}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;" >Session Time</span>  : {{ Training_batch.Course_details.StartTime |time:"g.i A" }} - {{ Training_batch.Course_details.EndTime |time:"g.i A" }}</p>
                         </div>
                     </div>
                     <div class="col-12 col-lg-3 d-flex align-items-center justify-content-center" style="flex-direction: column;">
@@ -93,7 +97,10 @@ Home page | Inlingua
                             <a href="#" style="color: #FF751A;">Upload Recorded Class link</a>
                         </div>
                         <div>
-                            <a href="{% url 'batches' id=Training_batch.Course_details.ID %}" class="btn btn-dark mt-3" style="color: #FF751A;">Ready to start the class</a>
+                            <a href="" class="btn btn-dark mt-3" style="background-color: #FF751A;">Write a message</a>
+                        </div>
+                        <div>
+                            <a href="{% url 'batches' id=Training_batch.Course_details.ID %}" class="btn btn-dark mt-3" style="background-color: #FFF; color: #FF751A;">Ready to start the class</a>
                         </div>
                     </div>
                 </div>
@@ -101,21 +108,25 @@ Home page | Inlingua
             {% endfor %}
         </div>
     </div>
-
-
+    {% endif %}
 
     <div class="row">
+        <style>
+            .img-cover{
+            object-fit: cover;
+            object-position: top;
+            }
+        </style>
         <div class="col-lg-8">
             <div class="student-details">
                 <div class="container-fuild d-flex align-items-center" style="width: 70%;">
                     <div class="profile">
-                        <img
-                        {% if user.user_img.url is not None %}
-                            src="{{ user.user_img.url }}"
-                        {% else %}
-                            src="{% static 'img/imgs/Ellipse 3.svg' %}"
-                        {% endif %}
-                        alt="" width="100px" height="100px" class="rounded-circle me-2">
+                        <img {% if user.user_img.url is not None %}
+                                src="{{ user.user_img.url }}"
+                            {% else %}
+                                src="{% static 'img/imgs/Ellipse 3.svg' %}"
+                            {% endif %}
+                            alt="" width="100px" height="100px" class="rounded-circle me-2 img-cover">
                     </div>
                     <div class="profile-name w-100 mt-3">
                         <h3 
@@ -124,7 +135,7 @@ Home page | Inlingua
                         {% endif %}
                         >Hi, {{user.name}}</h3>
                         {% if user.is_staff %}
-                        <p class="m-0 mb-2">{{Trainer_qualifications.LanguageID}} Trainer</p>
+                        <p class="m-0 mb-2">{{trainer_qualifications.LanguageID.Name}} Trainer</p>
                         {% endif %}
                         <div class="today-date d-flex align-items-center">
                             <i class='bx bx-calendar'></i>
@@ -235,8 +246,13 @@ Home page | Inlingua
                                 <h3 class="h3">All Batch...</h3>
                             </div>
                             <div class="upcomming-batch-container mt-4 d-block d-lg-flex align-items-center" style="flex-wrap: wrap;">
-                                {% for Training_batch in Training_batches %}
-                                <a href="{% url 'batches' id=Training_batch.Course_details.ID %}" style="text-decoration: none;"><p class="m-0 p-4 mt-3" style="background-color: #DFDFDF; padding: 10px 20px; border-radius: 20px; margin-right: 10px !important;">{{Training_batch.Name}}</p></a>
+                                {% for Training_batch in training_batches %}
+                                <a href="{% url 'batches' id=Training_batch.Course_details.ID %}" style="text-decoration: none;">
+                                    <p class="m-0 p-4 mt-3" 
+                                        style="background-color: #DFDFDF; padding: 10px 20px; border-radius: 20px; margin-right: 10px !important;">
+                                        {{Training_batch.Name}}
+                                    </p>
+                                </a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -288,16 +304,16 @@ Home page | Inlingua
                     <div class="container-fuild">
                         <div class="course-details">
                             <div class="">
-                                <h1 class="text-white">
+                                <h1 class="" style="color: #FF751A; font-size: medium;">
                                     {% if user.is_staff %}
-                                        {{Training_Batch.Name}}
+                                        {{today_first_batch.Name}}{{Training_Batches.Name}}
                                     {% else %}
                                         {{training_batches.Course_details.Name}} - {{training_batches.Course_details.LevelID.Code}}
                                     {% endif %}
                                 </h1>
                                 {% if user.is_staff %}
-                                <p class="m-0 text-white">Batch ID : {{training_batches.ID}}</p>
-                                <p class="m-0 text-white">Language : {{training_batches.Name.Course_details.Name}}</p>
+                                <p class="m-0 text-white">Batch ID : {{today_first_batch.ID}}{{Training_Batches.ID}}</p>
+                                <p class="m-0 text-white">Language : {{today_first_batch.Course_details.LanguageID.Name}}{{Training_Batches.Course_details.LanguageID.Name}}</p>
                                 {% endif %}
                             </div>
                             
@@ -306,7 +322,7 @@ Home page | Inlingua
                                     <div
                                         class="progress-bar"
                                         role="progressbar"
-                                        style="width: {{training_batches.Course_details.Course_status}}%; height: 10px; background-color: #FF751A;"
+                                        style="width: {{today_first_batch.Course_details.Course_status}}{{Training_Batches.Course_details.Course_status}}{{training_batches.Course_details.Course_status}}%; height: 10px; background-color: #FF751A;"
                                         aria-valuenow="25"
                                         aria-valuemin="0"
                                         aria-valuemax="100"
@@ -321,13 +337,13 @@ Home page | Inlingua
                                         Class progress
                                         {% endif %}
                                     </p>
-                                    <span class="text-white">{{training_batches.Course_details.Course_status}} / 100</span>
+                                    <span class="text-white">{{today_first_batch.Course_details.Course_status}}{{Training_Batches.Course_details.Course_status}}{{training_batches.Course_details.Course_status}} / 100</span>
                                 </div>
                             </div>
                         </div>
                         <div class="course-details-rainers mt-4">
-                            <p class="m-0 text-white"><span class="letter-orange">Duration </span>: {{ training_batches.Course_details.StartDate |date:"d-m-Y" }} - {{ training_batches.Course_details.EndtDate | date:"d-m-Y" }}</p>
-                            <p class="m-0 text-white"><span class="letter-orange">Session Time </span>: {{ training_batches.Course_details.StartTime | time:"g.i A" }} - {{ training_batches.Course_details.EndTime |time:"g.i A" }}</p>
+                            <p class="m-0 text-white"><span class="letter-orange">Duration </span>: {{today_first_batch.Course_details.StartDate}}{{Training_Batches.Course_details.StartDate}}{{ training_batches.Course_details.StartDate |date:"d-m-Y" }} - {{today_first_batch.Course_details.EndtDate}}{{Training_Batches.Course_details.EndtDate}}{{ training_batches.Course_details.EndtDate | date:"d-m-Y" }}</p>
+                            <p class="m-0 text-white"><span class="letter-orange">Session Time </span>: {{today_first_batch.Course_details.StartTime }}{{ training_batches.Course_details.StartTime | time:"g.i A" }}{{Training_Batches.Course_details.StartTime}} - {{today_first_batch.Course_details.EndTime}}{{Training_Batches.Course_details.EndTime}}{{ training_batches.Course_details.EndTime |time:"g.i A" }}</p>
                             
                             {% if user.is_staff %}
                             {% else %}
