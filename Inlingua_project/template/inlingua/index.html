@@ -9,11 +9,95 @@ Home page | Inlingua
 
 {% block container %}
 
+{% if user.is_superuser %}
+{% include 'inc/sidebar.html' %}
+<!--Container Main start-->
+<div class="height-00 bg-light">
+    <div class="container-fluid">
+        <h4>Dashboard</h4>
+        <div class="row mt-3">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card card-img-holder text-white p-3" style="background: linear-gradient(to right, #ff7e5f, #feb47b);">
+                <div class="card-body">
+                  <img src="{% static 'img/imgs/circle.svg' %}" width="160px" class="card-img-absolute" alt="circle-image" style="position: absolute; right: 0; top: 0;">
+                  <h4 class="font-weight-normal mb-3">Students Enrolled
+                  </h4>
+                  <h2 class="mb-5">50</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card card-img-holder text-white p-3" style="background: rgb(2,0,36);
+              background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
+                <div class="card-body">
+                  <img src="{% static 'img/imgs/circle.svg' %}" width="160px" class="card-img-absolute" alt="circle-image" style="position: absolute; right: 0; top: 0;">
+                  <h4 class="font-weight-normal mb-3">Trainers Online
+                  </h4>
+                  <h2 class="mb-5">6/20</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card card-img-holder text-white p-3" style="background: rgb(33,130,0);
+              background: linear-gradient(41deg, rgba(33,130,0,1) 0%, rgba(252,161,69,1) 22%, rgba(166,0,0,1) 100%);">
+                <div class="card-body">
+                  <img src="{% static 'img/imgs/circle.svg' %}" width="160px" class="card-img-absolute" alt="circle-image" style="position: absolute; right: 0; top: 0;">
+                  <h4 class="font-weight-normal mb-3">Payment Received
+                  </h4>
+                  <h2 class="mb-5">40,000/-</h2>
+                </div>
+              </div>
+            </div>
+        </div>
+
+          <div class="row mt-3">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card card-img-holder text-white p-3" style="background: rgb(131,58,180);
+              background: linear-gradient(35deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);">
+                <div class="card-body">
+                  <img src="{% static 'img/imgs/circle.svg' %}" width="160px" class="card-img-absolute" alt="circle-image" style="position: absolute; right: 0; top: 0;">
+                  <h4 class="font-weight-normal mb-3">Today Enquiry
+                  </h4>
+                  <h2 class="mb-5">70</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card card-img-holder text-white p-3" style="background: rgb(131,58,180);
+              background: linear-gradient(35deg, rgba(131,58,180,1) 40%, rgba(253,29,29,1) 100%, rgba(252,176,69,1) 100%);">
+                <div class="card-body">
+                  <img src="{% static 'img/imgs/circle.svg' %}" width="160px" class="card-img-absolute" alt="circle-image" style="position: absolute; right: 0; top: 0;">
+                  <h4 class="font-weight-normal mb-3">Students Online
+                  </h4>
+                  <h2 class="mb-5">5/110</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <a href="" class="text-white"><div class="card card-img-holder text-white p-3" style="background: rgb(180,58,58);
+                background: linear-gradient(35deg, rgba(180,58,58,1) 0%, rgba(96,69,252,1) 50%, rgba(236,0,0,1) 100%);">
+                <div class="card-body">
+                  <img src="{% static 'img/imgs/circle.svg' %}" width="160px" class="card-img-absolute" alt="circle-image" style="position: absolute; right: 0; top: 0;">
+                  <h4 class="font-weight-normal mb-3">Payment Pending
+                  </h4>
+                  <h2 class="mb-5">72,000/-</h2>
+                </div>
+                </a>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+
+
+{% else %}
+
 <div class="container mt-3">
     <div class="home-nav-barcontainer d-flex p-3">
         <a href="{% url 'home' %}"><img src="{% static 'img/imgs/L1.png' %}" alt="" width="200px"></a>
         <div class="message-container" id="msg-icon">
-            <i class='bx bx-message-detail' ></i>
+            <i class='bx bx-message-detail'></i>
             <div class="msg-count">
                 {{ messages_count }} 1
             </div>
@@ -22,52 +106,50 @@ Home page | Inlingua
     {% include 'inc/message.html' %}
 </div>
 
-{% if user.is_superuser %}
-{% else %}
-<div class="profile-container  container mt-3 mb-3" >
-    <div class="container msg-box-open" id="msg-container" style="position: absolute; min-width: 100vw; min-height: 100vh; display: flex; justify-content: center; align-items: center; top: 0; left: 0;">
+<div class="profile-container  container mt-3 mb-3">
+    <div class="container msg-box-open" id="msg-container"
+        style="position: absolute; min-width: 100vw; min-height: 100vh; display: flex; justify-content: center; align-items: center; top: 0; left: 0;">
         <div class="col-12 col-lg-4 message-box">
             <div class="mb-3 heading d-flex align-items-center justify-content-between">
                 <h3>Notifcaions</h3>
                 <i class='bx bx-x' id="close-icon"></i>
             </div>
-            <p class="mt-4">Keep your personal number hidden, give information anonymously or just want to play a joke on a friend?</p>
+            <p class="mt-4">Keep your personal number hidden, give information anonymously or just want to play a joke
+                on a friend?</p>
             <hr>
-            <p class="mt-4">Keep your personal number hidden, give information anonymously or just want to play a joke on a friend?</p>
+            <p class="mt-4">Keep your personal number hidden, give information anonymously or just want to play a joke
+                on a friend?</p>
             <hr>
-            <p class="mt-4">Keep your personal number hidden, give information anonymously or just want to play a joke on a friend?</p>
+            <p class="mt-4">Keep your personal number hidden, give information anonymously or just want to play a joke
+                on a friend?</p>
             <hr>
         </div>
     </div>
 
     <!-- Modal view batch-->
     {% if user.is_staff %}
-    <div class="container msg-box-open" id="view-batch-container" style="position: absolute; min-width: 100vw; min-height: 100vh; display: flex; justify-content: center; align-items: center; top: 0; left: 0;">
+    <div class="container msg-box-open" id="view-batch-container"
+        style="position: absolute; min-width: 100vw; min-height: 100vh; display: flex; justify-content: center; align-items: center; top: 0; left: 0;">
         <div class="col-12 col-lg-10 message-box">
             <div class="mb-3 heading d-flex align-items-center justify-content-between">
                 <h3>All Batches</h3>
                 <i class='bx bx-x' id="close_btn_2"></i>
             </div>
             {% for Training_batch in training_batches %}
-            
             <div class="container mt-3 bg-white">
                 <div class="row bg-dark" style="border-radius: 20px;">
                     <div class="col-12 col-lg-5 bg-dark" style="border-radius: 20px; padding-left: 0;">
                         <div class="bg-dark" style="border-radius: 20px; padding: 25px 50px;">
                             <div>
                                 <h3 class="text-white">{{Training_batch.Name}}</h3>
-                                <p class="m-0 text-white">{{Training_batch.Course_details.LanguageID.Name}} {{Training_batch.Course_details.LevelID.Code}}</p>
+                                <p class="m-0 text-white">{{Training_batch.Course_details.LanguageID.Name}}
+                                    {{Training_batch.Course_details.LevelID.Code}}</p>
                             </div>
                             <div class="course-progress-container mt-3 w-50">
                                 <div class="progress" style="height: 5px;">
-                                    <div
-                                        class="progress-bar"
-                                        role="progressbar"
+                                    <div class="progress-bar" role="progressbar"
                                         style="width: {{Training_batch.Course_details.Course_status}}%; height: 10px; background-color: #FF751A;"
-                                        aria-valuenow="25"
-                                        aria-valuemin="0"
-                                        aria-valuemax="100"
-                                    >
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                     </div>
                                 </div>
                                 <div class="progress-value mt-3 d-flex justify-content-between">
@@ -85,13 +167,20 @@ Home page | Inlingua
                     </div>
                     <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center">
                         <div>
-                            <p class="m-0 text-white"><span style="color: #FF751A;">Batch ID </span>: {{Training_batch.ID}}</p>
-                            <p class="m-0 text-white"><span style="color: #FF751A;" >Language</span>  : {{Training_batch.Course_details.LanguageID.Name}}</p>
-                            <p class="m-0 text-white"><span style="color: #FF751A;" >Class Duration</span>  : {{ Training_batch.Course_details.StartDate |date:"d-m-Y" }} - {{ Training_batch.Course_details.StartDate |date:"d-m-Y" }}</p>
-                            <p class="m-0 text-white"><span style="color: #FF751A;" >Session Time</span>  : {{ Training_batch.Course_details.StartTime |time:"g.i A" }} - {{ Training_batch.Course_details.EndTime |time:"g.i A" }}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;">Batch ID </span>:
+                                {{Training_batch.ID}}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;">Language</span> :
+                                {{Training_batch.Course_details.LanguageID.Name}}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;">Class Duration</span> : {{
+                                Training_batch.Course_details.StartDate |date:"d-m-Y" }} - {{
+                                Training_batch.Course_details.StartDate |date:"d-m-Y" }}</p>
+                            <p class="m-0 text-white"><span style="color: #FF751A;">Session Time</span> : {{
+                                Training_batch.Course_details.StartTime |time:"g.i A" }} - {{
+                                Training_batch.Course_details.EndTime |time:"g.i A" }}</p>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-3 d-flex align-items-center justify-content-center" style="flex-direction: column;">
+                    <div class="col-12 col-lg-3 d-flex align-items-center justify-content-center"
+                        style="flex-direction: column;">
                         <div class="">
                             <img src="{% static 'img/imgs/Group.svg' %}" alt="">
                             <a href="#" style="color: #FF751A;">Upload Recorded Class link</a>
@@ -100,7 +189,8 @@ Home page | Inlingua
                             <a href="" class="btn btn-dark mt-3" style="background-color: #FF751A;">Write a message</a>
                         </div>
                         <div>
-                            <a href="{% url 'batches' id=Training_batch.Course_details.ID %}" class="btn btn-dark mt-3" style="background-color: #FFF; color: #FF751A;">Ready to start the class</a>
+                            <a href="{% url 'batches' id=Training_batch.Course_details.ID %}" class="btn btn-dark mt-3"
+                                style="background-color: #FFF; color: #FF751A;">Ready to start the class</a>
                         </div>
                     </div>
                 </div>
@@ -112,28 +202,21 @@ Home page | Inlingua
 
     <div class="row">
         <style>
-            .img-cover{
-            object-fit: cover;
-            object-position: top;
+            .img-cover {
+                object-fit: cover;
+                object-position: top;
             }
         </style>
         <div class="col-lg-8">
             <div class="student-details">
                 <div class="container-fuild d-flex align-items-center" style="width: 70%;">
                     <div class="profile">
-                        <img {% if user.user_img.url is not None %}
-                                src="{{ user.user_img.url }}"
-                            {% else %}
-                                src="{% static 'img/imgs/Ellipse 3.svg' %}"
-                            {% endif %}
-                            alt="" width="100px" height="100px" class="rounded-circle me-2 img-cover">
+                        <img {% if user.user_img.url is not None %} src="{{ user.user_img.url }}" {% else %}
+                            src="{% static 'img/imgs/Ellipse 3.svg' %}" {% endif %} alt="" width="100px" height="100px"
+                            class="rounded-circle me-2 img-cover">
                     </div>
                     <div class="profile-name w-100 mt-3">
-                        <h3 
-                        {% if user.is_staff %}
-                        style="line-height: 16px;"
-                        {% endif %}
-                        >Hi, {{user.name}}</h3>
+                        <h3 {% if user.is_staff %} style="line-height: 16px;" {% endif %}>Hi, {{user.name}}</h3>
                         {% if user.is_staff %}
                         <p class="m-0 mb-2">{{trainer_qualifications.LanguageID.Name}} Trainer</p>
                         {% endif %}
@@ -141,21 +224,21 @@ Home page | Inlingua
                             <i class='bx bx-calendar'></i>
                             <p class="m-0" id="currentDate"></p>
                             <p class="m-0"> | </p>
-                                <script>
+                            <script>
                                 var currentDate = new Date();
                                 var options = { year: 'numeric', month: 'long', day: 'numeric' };
                                 var formattedDate = currentDate.toLocaleDateString('en-US', options);
                                 document.getElementById('currentDate').textContent = formattedDate;
-                                </script>
+                            </script>
                             <p class="m-0" id="currentDay"></p>
                             <script>
-                              var currentDate = new Date();
-                              var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                              var currentDayIndex = currentDate.getDay();
-                              var currentDayName = daysOfWeek[currentDayIndex];
-                              document.getElementById('currentDay').textContent = currentDayName;
+                                var currentDate = new Date();
+                                var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                                var currentDayIndex = currentDate.getDay();
+                                var currentDayName = daysOfWeek[currentDayIndex];
+                                document.getElementById('currentDay').textContent = currentDayName;
                             </script>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -167,14 +250,14 @@ Home page | Inlingua
                         Student ID : {{user.id}}
                         {% endif %}
                     </p>
-                    
+
                     {% if user.is_staff %}
-                        <button style="color:#FF751A;" class="btn btn-dark" id="view-batch-btn">View Batches</button>
+                    <button style="color:#FF751A;" class="btn btn-dark" id="view-batch-btn">View Batches</button>
                     {% else %}
-                        <a href="#" class="btn btn-dark"><i class='bx bx-download mr-3'></i> Get Certificate</a>
+                    <a href="#" class="btn btn-dark"><i class='bx bx-download mr-3'></i> Get Certificate</a>
                     {% endif %}
-                    
-                    
+
+
                 </div>
             </div>
 
@@ -185,24 +268,19 @@ Home page | Inlingua
                             <div class="">
                                 <h1 class="text-white">
                                     {% if user.is_staff %}
-                                        Batch 20
+                                    Batch 20
                                     {% else %}
-                                        {{course_details.Name}} - {{level.Code}}
+                                    {{course_details.Name}} - {{level.Code}}
                                     {% endif %}
                                 </h1>
                                 <p class="m-0 text-white">Batch ID : BTA2023</p>
                             </div>
-                            
+
                             <div class="course-progress-container mt-3">
                                 <div class="progress" style="height: 5px;">
-                                    <div
-                                        class="progress-bar"
-                                        role="progressbar"
+                                    <div class="progress-bar" role="progressbar"
                                         style="width: {{course_details.Course_status}}%; height: 10px; background-color: #FF751A;"
-                                        aria-valuenow="25"
-                                        aria-valuemin="0"
-                                        aria-valuemax="100"
-                                    >
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                     </div>
                                 </div>
                                 <div class="progress-value d-flex justify-content-between">
@@ -218,8 +296,11 @@ Home page | Inlingua
                             </div>
                         </div>
                         <div class="course-details-rainers mt-4">
-                            <p class="m-0 text-white"><span class="letter-orange">Duration </span>: {{ Training_batch.Course_details.StartDate |date:"d-m-Y" }} - {{ course_details.EndtDate|date:"d-m-Y" }}</p>
-                            <p class="m-0 text-white"><span class="letter-orange">Session Time </span>: {{ course_details.StartTime|time:"g.i A" }} - {{ course_details.EndTime|time:"g.i A" }}</p>
+                            <p class="m-0 text-white"><span class="letter-orange">Duration </span>: {{
+                                Training_batch.Course_details.StartDate |date:"d-m-Y" }} - {{
+                                course_details.EndtDate|date:"d-m-Y" }}</p>
+                            <p class="m-0 text-white"><span class="letter-orange">Session Time </span>: {{
+                                course_details.StartTime|time:"g.i A" }} - {{ course_details.EndTime|time:"g.i A" }}</p>
                             {% if user.role_id == "Student" %}
                             <p class="m-0 text-white"><span class="letter-orange">Trainer </span>: Manoj Kumar</p>
                             {% endif %}
@@ -238,17 +319,20 @@ Home page | Inlingua
             </div>
             <div class="progress-card">
                 <div class="row">
-                     
+
                     {% if user.is_staff %}
                     <div class="col-12">
-                        <div class="container-fuild mt-3 d-block align-items-center" style="background-color:#F0F0F0; border-radius: 20px; padding: 40px;">
+                        <div class="container-fuild mt-3 d-block align-items-center"
+                            style="background-color:#F0F0F0; border-radius: 20px; padding: 40px;">
                             <div class="contant" style="width: fit-content;">
                                 <h3 class="h3">All Batch...</h3>
                             </div>
-                            <div class="upcomming-batch-container mt-4 d-block d-lg-flex align-items-center" style="flex-wrap: wrap;">
+                            <div class="upcomming-batch-container mt-4 d-block d-lg-flex align-items-center"
+                                style="flex-wrap: wrap;">
                                 {% for Training_batch in training_batches %}
-                                <a href="{% url 'batches' id=Training_batch.Course_details.ID %}" style="text-decoration: none;">
-                                    <p class="m-0 p-4 mt-3" 
+                                <a href="{% url 'batches' id=Training_batch.Course_details.ID %}"
+                                    style="text-decoration: none;">
+                                    <p class="m-0 p-4 mt-3"
                                         style="background-color: #DFDFDF; padding: 10px 20px; border-radius: 20px; margin-right: 10px !important;">
                                         {{Training_batch.Name}}
                                     </p>
@@ -265,35 +349,35 @@ Home page | Inlingua
                     {% else %}
                     <div class="col-lg-4 d-flex align-items-center justify-content-center">
                         <a href="one" style="width: 100%; text-decoration: none;">
-                        <div class="container-fuild mt-3 d-flex d-lg-block align-items-center">
-                            <div class="contant bg-dark">
-                                <img src="{% static 'img/imgs/Book.svg' %}" alt="">
+                            <div class="container-fuild mt-3 d-flex d-lg-block align-items-center">
+                                <div class="contant bg-dark">
+                                    <img src="{% static 'img/imgs/Book.svg' %}" alt="">
+                                </div>
+                                <p class="m-3 m-lg-0">Study Material</p>
                             </div>
-                            <p class="m-3 m-lg-0">Study Material</p>
-                        </div>
                         </a>
                     </div>
                     <div class="col-lg-4  d-flex align-items-center justify-content-center">
                         <a href="one" style="width: 100%; text-decoration: none;">
-                        <div class="container-fuild mt-3 d-flex d-lg-block align-items-center">
-                            <div class="contant bg-dark">
-                                <img src="{% static 'img/imgs/Pen.svg' %}" alt="">
+                            <div class="container-fuild mt-3 d-flex d-lg-block align-items-center">
+                                <div class="contant bg-dark">
+                                    <img src="{% static 'img/imgs/Pen.svg' %}" alt="">
+                                </div>
+                                <p class="m-3 m-lg-0">Assessment</p>
                             </div>
-                            <p class="m-3 m-lg-0">Assessment</p>
-                        </div>
                         </a>
                     </div>
                     <div class="col-lg-4  d-flex align-items-center justify-content-center">
                         <a href="one" style="width: 100%; text-decoration: none;">
-                        <div class="container-fuild mt-3 d-flex d-lg-block align-items-center">
-                            <div class="contant bg-dark">
-                                <img src="{% static 'img/imgs/Youtube.svg' %}" alt="">
+                            <div class="container-fuild mt-3 d-flex d-lg-block align-items-center">
+                                <div class="contant bg-dark">
+                                    <img src="{% static 'img/imgs/Youtube.svg' %}" alt="">
+                                </div>
+                                <p class="m-3 m-lg-0">Recorded Session</p>
                             </div>
-                            <p class="m-3 m-lg-0">Recorded Session</p>
-                        </div>
                         </a>
-                    </div>  
-                    {% endif %}              
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -306,27 +390,25 @@ Home page | Inlingua
                             <div class="">
                                 <h1 class="" style="color: #FF751A; font-size: medium;">
                                     {% if user.is_staff %}
-                                        {{today_first_batch.Name}}{{Training_Batches.Name}}
+                                    {{today_first_batch.Name}}{{Training_Batches.Name}}
                                     {% else %}
-                                        {{training_batches.Course_details.Name}} - {{training_batches.Course_details.LevelID.Code}}
+                                    {{training_batches.Course_details.Name}} -
+                                    {{training_batches.Course_details.LevelID.Code}}
                                     {% endif %}
                                 </h1>
                                 {% if user.is_staff %}
                                 <p class="m-0 text-white">Batch ID : {{today_first_batch.ID}}{{Training_Batches.ID}}</p>
-                                <p class="m-0 text-white">Language : {{today_first_batch.Course_details.LanguageID.Name}}{{Training_Batches.Course_details.LanguageID.Name}}</p>
+                                <p class="m-0 text-white">Language :
+                                    {{today_first_batch.Course_details.LanguageID.Name}}{{Training_Batches.Course_details.LanguageID.Name}}
+                                </p>
                                 {% endif %}
                             </div>
-                            
+
                             <div class="course-progress-container mt-3">
                                 <div class="progress" style="height: 5px;">
-                                    <div
-                                        class="progress-bar"
-                                        role="progressbar"
+                                    <div class="progress-bar" role="progressbar"
                                         style="width: {{today_first_batch.Course_details.Course_status}}{{Training_Batches.Course_details.Course_status}}{{training_batches.Course_details.Course_status}}%; height: 10px; background-color: #FF751A;"
-                                        aria-valuenow="25"
-                                        aria-valuemin="0"
-                                        aria-valuemax="100"
-                                    >
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                     </div>
                                 </div>
                                 <div class="progress-value d-flex justify-content-between">
@@ -337,30 +419,46 @@ Home page | Inlingua
                                         Class progress
                                         {% endif %}
                                     </p>
-                                    <span class="text-white">{{today_first_batch.Course_details.Course_status}}{{Training_Batches.Course_details.Course_status}}{{training_batches.Course_details.Course_status}} / 100</span>
+                                    <span
+                                        class="text-white">{{today_first_batch.Course_details.Course_status}}{{Training_Batches.Course_details.Course_status}}{{training_batches.Course_details.Course_status}}
+                                        / 100</span>
                                 </div>
                             </div>
                         </div>
                         <div class="course-details-rainers mt-4">
-                            <p class="m-0 text-white"><span class="letter-orange">Duration </span>: {{today_first_batch.Course_details.StartDate}}{{Training_Batches.Course_details.StartDate}}{{ training_batches.Course_details.StartDate |date:"d-m-Y" }} - {{today_first_batch.Course_details.EndtDate}}{{Training_Batches.Course_details.EndtDate}}{{ training_batches.Course_details.EndtDate | date:"d-m-Y" }}</p>
-                            <p class="m-0 text-white"><span class="letter-orange">Session Time </span>: {{today_first_batch.Course_details.StartTime }}{{ training_batches.Course_details.StartTime | time:"g.i A" }}{{Training_Batches.Course_details.StartTime}} - {{today_first_batch.Course_details.EndTime}}{{Training_Batches.Course_details.EndTime}}{{ training_batches.Course_details.EndTime |time:"g.i A" }}</p>
-                            
+                            <p class="m-0 text-white"><span class="letter-orange">Duration </span>:
+                                {{today_first_batch.Course_details.StartDate}}{{Training_Batches.Course_details.StartDate}}{{
+                                training_batches.Course_details.StartDate |date:"d-m-Y" }} -
+                                {{today_first_batch.Course_details.EndtDate}}{{Training_Batches.Course_details.EndtDate}}{{
+                                training_batches.Course_details.EndtDate | date:"d-m-Y" }}</p>
+                            <p class="m-0 text-white"><span class="letter-orange">Session Time </span>:
+                                {{today_first_batch.Course_details.StartTime }}{{
+                                training_batches.Course_details.StartTime | time:"g.i A"
+                                }}{{Training_Batches.Course_details.StartTime}} -
+                                {{today_first_batch.Course_details.EndTime}}{{Training_Batches.Course_details.EndTime}}{{
+                                training_batches.Course_details.EndTime |time:"g.i A" }}</p>
+
                             {% if user.is_staff %}
                             {% else %}
-                                <p class="m-0 text-white"><span class="letter-orange">Trainer </span>: {{training_batches.TrainerId.Name}}</p>
+                            <p class="m-0 text-white"><span class="letter-orange">Trainer </span>:
+                                {{training_batches.TrainerId.Name}}</p>
                             {% endif %}
                         </div>
                         <div class="buttons mt-5 d-flex align-items-center justify-content-between">
                             {% if request.path == '/crm/home' %}
-                                <a href="#" class="btn btn-dark" style="color: #FFF; background-color:#FF751A; border-radius: 20px;">Ready to start class</a>
-                                <a href="{% url 'logout' %}" class="logout btn btn-dark" style="color: #FF751A; background-color:#FFF; border-radius: 20px;">Logout</a>
+                            <a href="#" class="btn btn-dark"
+                                style="color: #FFF; background-color:#FF751A; border-radius: 20px;">Ready to start
+                                class</a>
+                            <a href="{% url 'logout' %}" class="logout btn btn-dark"
+                                style="color: #FF751A; background-color:#FFF; border-radius: 20px;">Logout</a>
                             {% else %}
-                                {% if user.is_staff %}
-                                <a href="#">Start Class</a>
-                                {% else %}
-                                <a href="https://meet.google.com/fsf-iihs-gfk" target="_blank" onclick="return false;" >Join Class</a>
-                                {% endif %}
-                                <a href="{% url 'logout' %}" class="logout">Log out</a>
+                            {% if user.is_staff %}
+                            <a href="#">Start Class</a>
+                            {% else %}
+                            <a href="https://meet.google.com/fsf-iihs-gfk" target="_blank" onclick="return false;">Join
+                                Class</a>
+                            {% endif %}
+                            <a href="{% url 'logout' %}" class="logout">Log out</a>
                             {% endif %}
                         </div>
                     </div>
@@ -403,4 +501,3 @@ Home page | Inlingua
 {% endif %}
 
 {% endblock %}
-    
