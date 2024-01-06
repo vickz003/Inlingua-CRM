@@ -97,3 +97,29 @@ def edit_view(request, id):
                 return render(request, "inlingua/tables.html", context)
     else:
         pass  # Handle authentication failure if needed
+
+
+def delete_role(request, id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+
+        if user.is_staff and user.is_superuser:
+            try:
+                update_role = UserRoles.objects.get(ID=id)
+                update_role.IsActive = False
+                update_role.UpdatedBy = request.user.username
+                update_role.UpdatedDate = datetime.datetime.now()
+                update_role.save()
+
+                messages.success(request, f"{update_role.Name} has been deleted successfully from the system.")
+                return redirect('tables')
+            except UserRoles.DoesNotExist:
+                raise Http404("Role does not exist")
+            
+            
+        else:
+            messages.error(request, 'You do not have permission to perform this action!')
+            return redirect('home')
+    else:
+        pass  # Handle authentication failure if needed

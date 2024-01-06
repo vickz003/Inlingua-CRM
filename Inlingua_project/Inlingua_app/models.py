@@ -25,6 +25,7 @@ class CustomUserManager(BaseUserManager):
 class Languages(models.Model):
     ID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=255)
+    IsActive = models.BooleanField(default=True)
     CreatedDate = models.DateTimeField(default=timezone.now)
     CreatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)

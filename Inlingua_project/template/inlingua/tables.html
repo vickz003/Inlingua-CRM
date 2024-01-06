@@ -22,7 +22,7 @@ Home page | Inlingua
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-4 mt-3">
-                                <label for="role-name" class="form-label text-white">Name</label>
+                                <label for="role-name" class="form-label text-white">Role</label>
                                 <input type="text" class="form-control text-white bg-dark" id="role-name" name="RoleName" value="{{get_data.Name}}">
                             </div>
                             <div class="col-4 mt-3">
@@ -51,8 +51,7 @@ Home page | Inlingua
 
                         <div class="col-12">
                             <input type="submit" class="btn btn-primary mt-3" value="Save changes">
-                            <input type="reset" class="btn btn-primary mt-3" value="class {{get_data.Name}}">
-                            <a href="" class="btn btn-primary mt-3">Delete {{ get_data.Name }}</a>
+                            <a href="delete/{{ get_data.ID }}" class="btn btn-primary mt-3">Delete {{ get_data.Name }}</a>
                         </div>
                         
                     </form>
@@ -72,14 +71,9 @@ Home page | Inlingua
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-4 mt-3">
-                                <label for="role-name" class="form-label text-white">Name</label>
+                                <label for="role-name" class="form-label text-white">Language</label>
                                 <input type="text" class="form-control text-white bg-dark" id="role-name" name="RoleName" value="{{get_data.Name}}">
                             </div>
-                            <div class="col-4 mt-3">
-                                <label for="role-des" class="form-label text-white">Description</label>
-                                <input type="text" class="form-control text-white bg-dark" name="Roledesc" id="role-des" value="{{get_data.Description}}">
-                            </div>
-                            
                             <div class="col-4 mt-3">
                                 <label for="" class="form-label text-white">CreatedBy</label>
                                 <input type="text" class="form-control text-white bg-dark" id="" readonly value="{{get_data.CreatedBy}}">
@@ -101,8 +95,7 @@ Home page | Inlingua
 
                         <div class="col-12">
                             <input type="submit" class="btn btn-primary mt-3" value="Save changes">
-                            <input type="reset" class="btn btn-primary mt-3" value="class {{get_data.Name}}">
-                            <a href="" class="btn btn-primary mt-3">Delete {{ get_data.Name }}</a>
+                            <a href="delete/{{ get_data.ID }}" class="btn btn-primary mt-3">Delete {{ get_data.Name }}</a>
                         </div>
                         
                     </form>
@@ -156,7 +149,7 @@ Home page | Inlingua
                             <h3 class="card-title text-white">Languages</h3>
                             <p class="card-text text-white">View and manage languages available on this platform.</p>
                             {% for language in languages%}
-                            <a href="" class="">{{language.Name}}</a><br>
+                            <a href="{% url 'edit_lang' id=language.ID %}" class="">{{language.Name}}</a><br>
                             {% endfor %}
                             <form method="POST" class="dev-close {{showcontainer}}" action="{% url 'add_language' %}">
                               

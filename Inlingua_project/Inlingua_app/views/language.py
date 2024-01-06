@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from Inlingua_app.models import User, TrainingStaff, TrainerQualifications, TrainingBatches, StudentDetails,UserRoles, Languages
@@ -44,10 +45,9 @@ def add_language(request):
             messages.warning(request,"Please fill out all fields.")
     return redirect('tables') 
 
-from Inlingua_app.forms import UserRolesForm
 from django.http import Http404
 
-def edit_view(request, id):
+def edit_lang(request, id):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = User.objects.get(id=user_id)
@@ -55,25 +55,24 @@ def edit_view(request, id):
         if user.is_staff and user.is_superuser:
             if request.method == 'POST':
                 role_name = request.POST.get('RoleName')
-                description = request.POST.get('Roledesc')
+                if not Languages.objects.filter(Name=role_name).exists():
+                    update_langu = Languages.objects.get(ID=id)
 
-                update_role = UserRoles.objects.get(ID=id)
+                    update_langu.Name = role_name
+                    update_langu.UpdatedBy = request.user.username
+                    update_langu.UpdatedDate = datetime.datetime.now()
 
-                update_role.Name = role_name
-                update_role.Description = description
-                update_role.UpdatedBy = request.user.username
-                update_role.UpdatedDate = datetime.datetime.now()
+                    update_langu.save()
 
-                update_role.save()
-
-                return redirect('tables')  
+                    return redirect('tables')
+                else:
+                    messages.error(request,"This Language already exists.")
             else:
                 try:
-                    get_data = UserRoles.objects.get(ID=id)
+                    get_data = Languages.objects.get(ID=id)
                 except UserRoles.DoesNotExist:
                     raise Http404("Role does not exist")
 
-                form = UserRolesForm(instance=get_data)
 
                 roles = UserRoles.objects.all()
                 languages = Languages.objects.all()
@@ -82,9 +81,33 @@ def edit_view(request, id):
                     'roles': roles,
                     'languages': languages,
                     'get_data': get_data,
-                    'showdivcontainer': 'd-block',
-                    'form': form,
+                    'showlangcontainer': 'd-block',
                 }
                 return render(request, "inlingua/tables.html", context)
+    else:
+        pass  # Handle authentication failure if needed
+
+def delete_langu(request, id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+
+        if user.is_staff and user.is_superuser:
+            try:
+                update_langu = Languages.objects.get(ID=id)
+                update_langu.IsActive = False
+                update_langu.UpdatedBy = request.user.username
+                update_langu.UpdatedDate = datetime.datetime.now()
+                update_langu.save()
+
+                messages.success(request, f"{update_langu.Name} has been deleted successfully from the system.")
+                return redirect('tables')
+            except UserRoles.DoesNotExist:
+                raise Http404("Role does not exist")
+            
+            
+        else:
+            messages.error(request, 'You do not have permission to perform this action!')
+            return redirect('home')
     else:
         pass  # Handle authentication failure if needed

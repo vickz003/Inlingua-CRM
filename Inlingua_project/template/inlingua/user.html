@@ -9,11 +9,11 @@ Home page | Inlingua
 
 {% block container %}
 <div class="container-fluid" style="position: relative;">
-    <div class="container-fluid d-flex align-items-center justify-content-center" style="width: 100wh; height: 89.5vh; position: absolute; top: 0; right: 0; z-index: 10;">
-        <div class="container-fluid bg-dark p-5" style="border-radius: 5px;">
+    <div id="studentinputcontainer" class="container-fluid d-none d-flex align-items-center justify-content-center" style="width: 100wh; height: 89.5vh; position: absolute; top: 0; right: 0; z-index: 10; backdrop-filter: blur(3px);">
+        <div class="container-fluid  bg-dark p-5" style="border-radius: 5px;">
             <div class="container-fluid d-flex align-items-center justify-content-between">
                 <h3 class="text-white"><i class='bx bx-user'></i> Student details</h3>
-                <i class='bx bx-x text-danger' style="font-size: 26px;"></i>
+                <i class='bx bx-x text-danger' id="studentinputcontainerclosebtn" style="font-size: 26px;"></i>
             </div>
             <form >
                 <div class="row g-3 mt-1">
@@ -83,9 +83,9 @@ Home page | Inlingua
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Student Table</h4>
-                    <p class="card-description btn d-flex align-items-center justify-content-center" style="background: rgb(252,161,69);
-                    background: linear-gradient(90deg, rgba(252,161,69,1) 0%, rgba(219,29,4,1) 100%); color: #FFF; width: fit-content;"><i
-                            class='bx bx-plus' style="font-size: large;"></i> Add Student </p>
+                    <p id="addstudentbtn" class="card-description btn d-flex align-items-center justify-content-center" style="background: rgb(252,161,69);
+                            background: linear-gradient(90deg, rgba(252,161,69,1) 0%, rgba(219,29,4,1) 100%); color: #FFF; width: fit-content;">
+                            <i class='bx bx-plus' style="font-size: large;"></i> Add Student </p>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -192,4 +192,18 @@ Home page | Inlingua
     </div>
     {% endif %}
 </div>
+<script>
+
+const addstudentbtn = document.getElementById('addstudentbtn');
+const studentinputcontainer = document.getElementById('studentinputcontainer');
+const studentinputcontainerclosebtn = document.getElementById('studentinputcontainerclosebtn');
+
+addstudentbtn.addEventListener('click', () => {
+    studentinputcontainer.classList.remove('d-none')
+});
+studentinputcontainerclosebtn.addEventListener('click', () => {
+    studentinputcontainer.classList.add('d-none')
+});
+
+</script>
 {% endblock %}
