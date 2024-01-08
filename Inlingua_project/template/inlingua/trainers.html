@@ -9,62 +9,176 @@ Trainer page | Inlingua
 
 {% block container %}
 {% include 'inc/sidebar.html' %}
+<h4 class="card-title">Trainers</h4>
+
+{% if request.path == "/crm/trainers" %}
+<div class="row">
+    <div class="col-4 mt-3">
+        <div class="input-group">
+            <input type="search" class="form-control rounded" placeholder="Search Trainers" aria-label="Search" aria-describedby="search-addon" />
+            <input type="submit" class="btn text-white" value="Serach" style="background-color: #FF751A;">
+          </div>
+    </div>
+</div>
 <div class="row g-3 h-100 mt-1">
     {% for language in languages %}
-    <div class="col-3  mt-3 d-flex flex-column">
-        <div class="card h-100">
-            <div class="card-body bg-dark p-4 text-white" style="border-radius: 5px;">
-                <i class='bx bx-book text-white h1'></i>
-                <h3 class="card-title" style="color: #FF751A;">{{language.Name}}</h3>
-                
+        <a href="{% url 'language_view' name=language.Name %}" class="col-3 mt-3 d-flex flex-column">
+            <div >
+                <div class="card h-100">
+                    <div class="card-body bg-dark p-4 text-white" style="border-radius: 5px;">
+                        <i class='bx bx-book text-white h1'></i>
+                        <h3 class="card-title" style="color: #FF751A;"> {{language.Name }}</h3>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </a>
     {% endfor %}
     <div class="height-00">
         <div class="col-lg-12 grid-margin stretch-card mt-3">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Student Table</h4>
-                    <p id="addstudentbtn" class="card-description btn d-flex align-items-center justify-content-center" style="background: rgb(252,161,69);
-                            background: linear-gradient(90deg, rgba(252,161,69,1) 0%, rgba(219,29,4,1) 100%); color: #FFF; width: fit-content;">
-                            <i class='bx bx-plus' style="font-size: large;"></i> Add Student </p>
+                    <p id="addstudentbtn" class="card-description btn btn-danger d-flex align-items-center justify-content-center" style="width: fit-content; background-color: #FF751A;">
+                    <i class='bx bx-plus' style="font-size: large;"></i> Add Trainers </p>
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th> First name </th>
-                                <th> Progress </th>
-                                <th> Amount </th>
-                                <th> Deadline </th>
+                                <th>First Name</th>
+                                <th>Language</th>
+                                <th>Level Id</th>
+                                <th>Certificate Number</th>
+                                <th>Certificate Valid Till</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for training_Staff in training_Staff %}
-                            <tr style="width: 50px;">
-                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Henry Tom </td>
-                                <td>
-                                    <div class="progress" style="height: 7px;">
-                                        <div class="progress-bar" role="progressbar"
-                                            style="width: 50%; height: 30px; background-color: #FF751A;"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <p class="m-0 p-0" style="font-size: small;">Garman APL 1</p>
-                                        <p class="m-0 p-0" style="font-size: small;">50 / 100</p>
-                                    </div>
-                                    
-                                </td>
-                                <td> $ 150.00 </td>
-                                <td> June 16, 2015 </td>
-                            </tr>
+                                <tr>
+                                    <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"><a href="{% url 'trainer' id=training_Staff.ID %}"> {{ training_Staff.TrainerId.Name }}</a></td>
+                                    <td>{{ training_Staff.LanguageID.Name }}</td>
+                                    <td>{{ training_Staff.LevelId.Code }}</td>
+                                    <td>{{ training_Staff.CertificateNumber }}</td>
+                                    <td>{{ training_Staff.CertificateValidTill }}</td>
+                                </tr>
                             {% endfor %}
                         </tbody>
-                        
                     </table>
+                            
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% else %}
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <label for="file-input">
+                            <img class="img-account-profile rounded-circle mb-2"
+                            src="{% static 'img/uploads/Profiles/' %}{{ training_Staff.TrainerId.LoginId.user_img }}"
+                            alt=""
+                            width="190px" height="190px"
+                            id="profile-image"
+                            style="cursor: pointer;">
+                        </label>
+                        <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="previewImage(this)">
+                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                        <input type="submit" class="btn btn-primary" value="Save Profile pic">
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('profile-image').src = e.target.result;
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        
+            function uploadImage() {
+                var fileInput = document.getElementById('file-input');
+                fileInput.click();
+            }
+        </script>
+        
+        <div class="col-xl-8">
+            <div class="card mb-4">
+                <div class="card-header">Basic Details</div>
+                <div class="card-body">
+                    <form>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputUsername">Name</label>
+                                <input class="form-control" id="inputUsername" type="text" placeholder="Enter Employee Name" value="{{training_Staff.TrainerId.Name}}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputUsername">Role</label>
+                                <input class="form-control" id="inputUsername" type="text" placeholder="Enter Employee Name" value="{{training_Staff.TrainerId.LoginId.role_id.Name}}">
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Mobile Number</label>
+                                <input class="form-control" id="inputFirstName" type="number" placeholder="Enter Employee Mobile Number" value="{{training_Staff.TrainerId.LoginId.Mobile_Number}}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Location</label>
+                                <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="{{training_Staff.TrainerId.LoginId.email}}">
+                        </div>
+                        <button class="btn btn-primary" type="button">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="card mb-4">
+            <div class="card-header">Account Details</div>
+            <div class="card-body">
+                <form>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="inputLocation">Language</label>
+                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location"  value="{{training_Staff.LanguageID.Name}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="inputLocation">Language Level Code</label>
+                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location"  value="{{training_Staff.LevelId.Code}}">
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="inputUsername">Certificate Number</label>
+                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter Employee Name" value="{{training_Staff.CertificateNumber}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="inputUsername">Certifying Authority</label>
+                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter Employee Name" value="{{training_Staff.CertifyingAuthority}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="inputFirstName">Certificate Valid Till</label>
+                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter Employee Mobile Number" value="{{training_Staff.CertificateValidTill}}">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" type="button">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
