@@ -45,9 +45,6 @@ class Level(models.Model):
 
     def __str__(self):
         return self.Name
-    
-
-    
 
 class Courses(models.Model):
     ID = models.AutoField(primary_key=True)

@@ -11,7 +11,7 @@ def table_page(request):
             if user.is_superuser:
                 roles = UserRoles.objects.all()
                 languages = Languages.objects.all()
-                context = {'User': user, 'roles': roles, 'languages':languages}
+                context = {'User': user, 'roles': roles, 'languages':languages, 'tables':'active'}
                 return render(request, "inlingua/tables.html",context)
 
             else:

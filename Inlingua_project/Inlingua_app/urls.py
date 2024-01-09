@@ -1,6 +1,7 @@
 from django.urls import path
 from Inlingua_app.views import (login, home, register, logout, batchdetails, 
-                                user, tables, language as lng, roles, trainers, language_page)
+                                user, tables, language as lng, roles, trainers, language_page,
+                                courceandlevels)
 from django.contrib.auth import views as password_views
 
 
@@ -20,6 +21,14 @@ urlpatterns = [
     path('crm/tables/addlanguage/add', lng.add_language, name="add_language"),
     path('crm/tables/language/<int:id>', lng.edit_lang, name="edit_lang"),
     path('crm/tables/language/delete/<int:id>', lng.delete_langu, name="delete_langu"),
+
+    # courece and Levels urls-------------------------------------------------
+
+    path('crm/courceandlevels_table', courceandlevels.table_page, name="courceandlevels_table"),
+    # path('crm/tables/addlanguage', lng.language_view, name="language"),
+    # path('crm/tables/addlanguage/add', lng.add_language, name="add_language"),
+    # path('crm/tables/language/<int:id>', lng.edit_lang, name="edit_lang"),
+    # path('crm/tables/language/delete/<int:id>', lng.delete_langu, name="delete_langu"),
 
     path('crm/tables/addrole',roles.role_view, name="roles"),
     path('crm/tables/addrole/add',roles.add_role, name="add_roles"),

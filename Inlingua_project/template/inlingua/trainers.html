@@ -179,6 +179,34 @@ Trainer page | Inlingua
             </div>
         </div>
     </div>
+    <h4 class="card-title">Batch Details</h4>
+    <div class="row g-3 h-100 mb-3">
+        {% for training_batche in training_batches %}
+        <div class="col-6 d-flex flex-column" style="border-radius: 5px;">
+            <div class="card-body bg-dark p-4 text-white" style="border-radius: 5px;">
+                <h3 class="mb-3" style="color: #FF751A;">{{training_batche.Name}}</h3>
+                <p class="mb-3" class="m-0">Language : <a href="">{{training_batche.Course_details.LanguageID.Name}}</a></p>
+                <div class="d-flex ">
+                    <p class="m-0" style="margin-right: 10px !important;">Start Date : <span style="color: #FF751A;">{{training_batche.Course_details.StartDate}}</span></p>
+                    <p >End Date : <span style="color: #FF751A;">{{training_batche.Course_details.EndtDate}}</span></p>
+                </div>
+                <div class="d-flex">
+                    <p class="m-0" style="margin-right: 10px !important;">Class Start : <span style="color: #FF751A;">{{training_batche.Course_details.StartTime}}</span></p>
+                <p class="m-0">Class End : <span style="color: #FF751A;">{{training_batche.Course_details.EndTime}}</span></p>
+                </div>
+                
+
+                <h5 class="card-title mt-2 text-white">Students</h5>
+                {% for Student_detail in Student_details %}
+                    {% if Student_detail.BatchID.ID == training_batche.ID %}
+                        <a href="">{{Student_detail.StudentID.name}}</a><br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+        </div>
+        {% endfor %}
+    </div> 
 </div>
 {% endif %}
 {% endblock %}

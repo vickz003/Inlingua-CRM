@@ -12,7 +12,7 @@ def role_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = User.objects.get(id=user_id)
-
+        
         if user.is_staff:
             if user.is_superuser:
                 roles = UserRoles.objects.all()
