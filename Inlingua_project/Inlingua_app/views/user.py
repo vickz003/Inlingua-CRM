@@ -9,9 +9,10 @@ def user_page(request):
 
         if user.is_staff:
             if user.is_superuser:
+                
                 Student_details = StudentDetails.objects.all()
                 Training_staff = TrainingStaff.objects.all()
-                context = {'User': user, 'Training Staff': Training_staff, 'Student_details':Student_details}
+                context = {'User': user, 'Training Staff': Training_staff, 'Student_details':Student_details, 'Students':'active'}
                 return render(request, "inlingua/user.html",context)
 
             else:

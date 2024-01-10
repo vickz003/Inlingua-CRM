@@ -8,123 +8,202 @@ Home page | Inlingua
 {% endblock %}
 
 {% block container %}
-<div class="container-fluid bg-dark" style="width: 100wh; height: 89.3vh; position: absolute; top: 0; left: 0; z-index: 100;">
-
-</div>
-{% if user.is_superuser %}
-{% include 'inc/sidebar.html' %}
-<!--Container Main start-->
-<div class="height-00 bg-light">
-    <div class="col-lg-12 grid-margin stretch-card mt-3">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Student Table</h4>
-                <p class="card-description btn d-flex align-items-center justify-content-center" style="background: rgb(252,161,69);
-                background: linear-gradient(90deg, rgba(252,161,69,1) 0%, rgba(219,29,4,1) 100%); color: #FFF; width: fit-content;"><i
-                        class='bx bx-plus' style="font-size: large;"></i> Add Student </p>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th> First name </th>
-                            <th> Progress </th>
-                            <th> Amount </th>
-                            <th> Deadline </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Herman Beck
-                            </td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                            <td> $ 77.99 </td>
-                            <td> May 15, 2015 </td>
-                        </tr>
-                        <tr>
-                            <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Messsy Adam
-                            </td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 75%"
-                                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                            <td> $245.30 </td>
-                            <td> July 1, 2015 </td>
-                        </tr>
-                        <tr>
-                            <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> John Richards
-                            </td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 90%"
-                                        aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                            <td> $138.00 </td>
-                            <td> Apr 12, 2015 </td>
-                        </tr>
-                        <tr>
-                            <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Peter Meggik
-                            </td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 50%"
-                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                            <td> $ 77.99 </td>
-                            <td> May 15, 2015 </td>
-                        </tr>
-                        <tr>
-                            <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Edward </td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 35%"
-                                        aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                            <td> $ 160.25 </td>
-                            <td> May 03, 2015 </td>
-                        </tr>
-                        <tr>
-                            <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> John Doe </td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 65%"
-                                        aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </td>
-                            <td> $ 123.21 </td>
-                            <td> April 05, 2015 </td>
-                        </tr>
-                        <tr style="width: 50px;">
-                            <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Henry Tom </td>
-                            <td>
-                                <div class="progress" style="height: 7px;">
-                                    <div class="progress-bar" role="progressbar"
-                                        style="width: 50%; height: 30px; background-color: #FF751A;"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+<div class="container-fluid" style="position: relative;">
+    <div id="studentinputcontainer" class="container-fluid d-none d-flex align-items-center justify-content-center" style="width: 100wh; height: 89.5vh; position: absolute; top: 0; right: 0; z-index: 10; backdrop-filter: blur(3px);">
+        <div class="container-fluid  bg-dark p-5" style="border-radius: 5px;">
+            <div class="container-fluid d-flex align-items-center justify-content-between">
+                <h3 class="text-white"><i class='bx bx-user'></i> Student details</h3>
+                <i class='bx bx-x text-danger' id="studentinputcontainerclosebtn" style="font-size: 26px;"></i>
+            </div>
+            <form >
+                <div class="row g-3 mt-1">
+                    <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Student ID <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control text-white bg-dark" id="exampleFormControlInput1">
+                      </div>
+                    <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control text-white bg-dark" id="exampleFormControlInput1">
+                      </div>
+                      <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Last Name</label>
+                        <input type="text" class="form-control text-white bg-dark" id="exampleFormControlInput1">
+                      </div>
+                      
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Email address <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control bg-dark text-white" id="exampleFormControlInput1">
+                      </div>
+                      <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Language <span class="text-danger">*</span></label>
+                        <select class="form-select form-select bg-dark text-white" name="" id="">
+                                <option selected>Select a Language</option>
+                                <option value="">New Delhi</option>
+                                <option value="">Istanbul</option>
+                                <option value="">Jakarta</option>
+                            </select>
+                        
+                      </div>
+                      <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Level <span class="text-danger">*</span></label>
+                        <select class="form-select form-select bg-dark text-white" name="" id="">
+                            <option selected>Select a Level</option>
+                            <option value="">New Delhi</option>
+                            <option value="">Istanbul</option>
+                            <option value="">Jakarta</option>
+                        </select>
+                      </div>
+                </div>
+                <div class="row g-3 mt-1">
+                      <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Photo</label>
+                        <input type="file" class="form-control bg-dark text-white" id="exampleFormControlInput1">
+                      </div>
+                      <div class="col-4">
+                        <label for="exampleFormControlInput1" class="form-label text-white">Password <span class="text-danger">*</span></label>
+                        <div style="position: relative;">
+                            <input type="text" class="form-control bg-dark text-white" id="exampleFormControlInput1" style="padding-right: 60px;">
+                            <p class="m-0 text-white" style="position: absolute; top: 20%; right: 5%;">Show</p>
+                        </div>
+                      </div>
+                      <div class="col-4 d-flex align-items-end">
+                        <input type="submit" class="btn btn-primary w-100" id="exampleFormControlInput1" value="Add student details">
+                      </div>
+                </div>
+              </form>
+        </div>
+    </div>
+    {% if user.is_superuser %}
+    {% include 'inc/sidebar.html' %}
+    <!--Container Main start-->
+    <div class="height-00 bg-light">
+        <div class="col-lg-12 grid-margin stretch-card mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Student Table</h4>
+                    <p id="addstudentbtn" class="card-description btn d-flex align-items-center justify-content-center" style="background: rgb(252,161,69);
+                            background: linear-gradient(90deg, rgba(252,161,69,1) 0%, rgba(219,29,4,1) 100%); color: #FFF; width: fit-content;">
+                            <i class='bx bx-plus' style="font-size: large;"></i> Add Student </p>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th> First name </th>
+                                <th> Progress </th>
+                                <th> Amount </th>
+                                <th> Deadline </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Herman Beck
+                                </td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="m-0 p-0" style="font-size: small;">Garman APL 1</p>
-                                    <p class="m-0 p-0" style="font-size: small;">50 / 100</p>
-                                </div>
-                                
-                            </td>
-                            <td> $ 150.00 </td>
-                            <td> June 16, 2015 </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                                <td> $ 77.99 </td>
+                                <td> May 15, 2015 </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Messsy Adam
+                                </td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%"
+                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td> $245.30 </td>
+                                <td> July 1, 2015 </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> John Richards
+                                </td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 90%"
+                                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td> $138.00 </td>
+                                <td> Apr 12, 2015 </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Peter Meggik
+                                </td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 50%"
+                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td> $ 77.99 </td>
+                                <td> May 15, 2015 </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Edward </td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 35%"
+                                            aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td> $ 160.25 </td>
+                                <td> May 03, 2015 </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> John Doe </td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 65%"
+                                            aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td> $ 123.21 </td>
+                                <td> April 05, 2015 </td>
+                            </tr>
+                            <tr style="width: 50px;">
+                                <td><img src="../../static/img/imgs/Ellipse 3.svg" alt="image" width="30px"> Henry Tom </td>
+                                <td>
+                                    <div class="progress" style="height: 7px;">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: 50%; height: 30px; background-color: #FF751A;"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <p class="m-0 p-0" style="font-size: small;">Garman APL 1</p>
+                                        <p class="m-0 p-0" style="font-size: small;">50 / 100</p>
+                                    </div>
+                                    
+                                </td>
+                                <td> $ 150.00 </td>
+                                <td> June 16, 2015 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
-{% endif %}
+<script>
+
+const addstudentbtn = document.getElementById('addstudentbtn');
+const studentinputcontainer = document.getElementById('studentinputcontainer');
+const studentinputcontainerclosebtn = document.getElementById('studentinputcontainerclosebtn');
+
+addstudentbtn.addEventListener('click', () => {
+    studentinputcontainer.classList.remove('d-none')
+});
+studentinputcontainerclosebtn.addEventListener('click', () => {
+    studentinputcontainer.classList.add('d-none')
+});
+
+</script>
 {% endblock %}

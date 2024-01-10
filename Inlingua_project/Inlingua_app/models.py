@@ -25,6 +25,7 @@ class CustomUserManager(BaseUserManager):
 class Languages(models.Model):
     ID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=255)
+    IsActive = models.BooleanField(default=True)
     CreatedDate = models.DateTimeField(default=timezone.now)
     CreatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
@@ -44,9 +45,6 @@ class Level(models.Model):
 
     def __str__(self):
         return self.Name
-    
-
-    
 
 class Courses(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -108,6 +106,7 @@ class UserRoles(models.Model):
 
 class User(AbstractUser):
     name = models.CharField(max_length=225, blank=True, null=True)
+    Mobile_Number = models.IntegerField(null=True, blank=True)
     user_img = models.ImageField(upload_to='static/img/uploads/Profiles', blank=True, null=True)
     created_by = models.CharField(max_length=255)
     updated_by = models.CharField(max_length=255, null=True, blank=True)

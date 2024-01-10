@@ -9,8 +9,8 @@ def home(request):
 
         if user.is_staff:
             if user.is_superuser:
-                
-                return render(request, 'inlingua/index.html')
+                Dashboard = "active"
+                return render(request, 'inlingua/index.html',{'Dashboard':Dashboard})
                 # Handle superuser logic here (if needed)
             else:
                 trainer_details = TrainingStaff.objects.get(LoginId=user)
