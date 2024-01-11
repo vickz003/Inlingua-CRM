@@ -22,9 +22,10 @@ urlpatterns = [
     path('crm/tables/language/<int:id>', lng.edit_lang, name="edit_lang"),
     path('crm/tables/language/delete/<int:id>', lng.delete_langu, name="delete_langu"),
 
-    # courece and Levels urls-------------------------------------------------
+    # batch courece and Levels urls-------------------------------------------------
 
     path('crm/courceandlevels_table', courceandlevels.table_page, name="courceandlevels_table"),
+    path('crm/courceandlevels_table/add_level', courceandlevels.add_level, name="add_level"),
     # path('crm/tables/addlanguage', lng.language_view, name="language"),
     # path('crm/tables/addlanguage/add', lng.add_language, name="add_language"),
     # path('crm/tables/language/<int:id>', lng.edit_lang, name="edit_lang"),
