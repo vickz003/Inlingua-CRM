@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
-def custom_login(request):
+def custom_login(request):  
     if request.user.is_authenticated:
         messages.error(request, "Please click on the logout button after you go to the login page.")
         return redirect('home')
