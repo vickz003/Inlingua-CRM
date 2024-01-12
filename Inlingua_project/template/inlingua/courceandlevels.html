@@ -13,11 +13,14 @@ Home page | Inlingua
         <div class="container-fluid  mt-3">
             {% include 'inc/message.html' %}
         </div>
+
+{% if request.path == "/crm/courceandlevels_table" %}
         <!-- Batch Model -->
         <div style="position: relative; width: 100%; height: 100%;">
             <div class="modal  fade" id="addbatch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="height: 100vh; width: 100%; backdrop-filter: blur(3px); position: absolute;" >
                 <div class="modal-dialog modal-lg ">
-                    <form method='POST'>
+                    <form method='POST' action="{% url 'add_batchs' %}">
+                        {% csrf_token %}
                         <div class="modal-content bg-dark">
                             <div class="modal-header">
                                 <h5 class="modal-title text-white" id="staticBackdropLabel">Add New Batch</h5>
@@ -32,18 +35,18 @@ Home page | Inlingua
                                     <div class="col-4">
                                         <label for="Courses_Details" class="form-label text-white">Courses Details</label>
                                         <select class="form-select form-select bg-dark text-white" id="Courses_Details" name="Courses_Details">
-                                            <option selected>Select a Language</option>
+                                            <option selected>Select a Course</option>
                                             {% for courses in All_courses %}
-                                            <option value="{{ courses.Name }}">{{ courses.Name }}</option>
+                                            <option value="{{ courses.ID}}">{{ courses.Name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-4">
                                         <label for="Trainer" class="form-label text-white">Trainer</label>
                                         <select class="form-select form-select bg-dark text-white" name="Trainer" id="Trainer">
-                                            <option selected>Select a Language</option>
+                                            <option selected>Select a Trainer</option>
                                             {% for training in training_staff%}
-                                            <option value="{{training.Name}}">{{training.Name}}</option>
+                                            <option value="{{training.ID}}">{{training.Name}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -91,10 +94,12 @@ Home page | Inlingua
         <div style="position: relative; width: 100%; height: 100%;">
             <div class="modal fade" id="addcourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="height: 100vh; width: 100%; backdrop-filter: blur(3px); position: absolute;" >
                 <div class="modal-dialog modal-lg">
-                    <form method='POST'>
+                    
+                    <form method='POST' action="{% url 'add_course' %}">
+                        {% csrf_token %}
                         <div class="modal-content bg-dark">
                             <div class="modal-header">
-                                <h5 class="modal-title text-white" id="staticBackdropLabel">Add New Batch</h5>
+                                <h5 class="modal-title text-white" id="staticBackdropLabel">Add New Couse</h5>
                                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -106,9 +111,9 @@ Home page | Inlingua
                                     <div class="col-4">
                                         <label for="levelid" class="form-label text-white">Level Details</label>
                                         <select class="form-select form-select bg-dark text-white" id="levelid" name="levelid">
-                                            <option selected>Select a Language</option>
-                                            {% for courses in All_courses %}
-                                            <option value="{{ courses.Name }}">{{ courses.Name }}</option>
+                                            <option selected>Select a Level</option>
+                                            {% for level in All_level %}
+                                            <option value="{{ level.ID }}">{{ level.Code }} | {{ level.Name }} </option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -116,8 +121,8 @@ Home page | Inlingua
                                         <label for="languageid" class="form-label text-white">Language Details</label>
                                         <select class="form-select form-select bg-dark text-white" name="languageid" id="languageid">
                                             <option selected>Select a Language</option>
-                                            {% for training in training_staff%}
-                                            <option value="{{training.Name}}">{{training.Name}}</option>
+                                            {% for languages in All_languages%}
+                                            <option value="{{languages.ID}}">{{languages.Name}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -125,7 +130,7 @@ Home page | Inlingua
                                 <div class="row g-3 mt-1">
                                     <div class="col-4">
                                         <label for="duration" class="form-label text-white">Course Duration</label>
-                                        <input type="text" class="form-control bg-dark text-white" id="duration" name="duration">
+                                        <input type="number" class="form-control bg-dark text-white" id="duration" name="duration">
                                     </div>
                                     <div class="col-4">
                                         <label for="cast" class="form-label text-white">Cast</label>
@@ -220,7 +225,7 @@ Home page | Inlingua
                                 Add Batch
                                 </button><br> 
                             {% for batches in All_batches%}
-                            <a href="" class="">{{batches.Name}}</a><br>
+                            <a href="{% url 'edit_batchs' id=batches.ID %}" class="">{{batches.Name}}</a><br>
                             {% endfor %}
                         </div>
                     </div>
@@ -257,5 +262,76 @@ Home page | Inlingua
                 </div>
             </div>
         </div>
+
+{% elif request.path == url_with_id %}
+
+        <form method='POST' action="{% url 'add_batchs' %}">
+            {% csrf_token %}
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white" id="staticBackdropLabel">Edit Batch</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 mt-1">
+                        <div class="col-4">
+                            <label for="batchname" class="form-label text-white">Batch Name</label>
+                            <input type="text" class="form-control text-white bg-dark" id="batchname" value="{{BatchInfo.Name}}" name="batchname">
+                        </div>
+                        <div class="col-4">
+                            <label for="Courses_Details" class="form-label text-white">Courses Details</label>
+                            <select class="form-select form-select bg-dark text-white" id="Courses_Details" name="Courses_Details">
+                                <option selected>Select a Course</option>
+                                {% for courses in All_courses %}
+                                <option value="{{ courses.ID}}">{{ courses.Name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label for="Trainer" class="form-label text-white">Trainer</label>
+                            <select class="form-select form-select bg-dark text-white" name="Trainer" id="Trainer">
+                                <option selected>Select a Trainer</option>
+                                {% for training in training_staff%}
+                                <option value="{{training.ID}}">{{training.Name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-4">
+                            <label for="gmeeturl" class="form-label text-white">G-meet url</label>
+                            <input type="text" class="form-control bg-dark text-white" id="gmeeturl" value="{{BatchInfo.MeetingURL}}" name="gmeeturl">
+                        </div>
+                        <div class="col-4">
+                            <label for="satrdate" class="form-label text-white">Start Date</label>
+                            <input class="form-control bg-dark text-white" type="date" id="satrdate"  value="{{ BatchInfo.StartDate|date_format }} name="satrdate">
+                        </div>
+                        <div class="col-4">
+                            <label for="End-Date" class="form-label text-white">End Date</label>
+                            <input class="form-control bg-dark text-white" type="date" id="End-Date"  value="{{BatchInfo.EndDate|date_format}}" name="EndDate">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-4">
+                            <label for="classduraition" class="form-label text-white">Duration</label>
+                            <input type="number" class="form-control bg-dark text-white" id="classduraition"  value="{{BatchInfo.Duration}}" name="classduraition">
+                        </div>
+                        <div class="col-4">
+                            <label for="start_time" class="form-label text-white">Start Time</label>
+                            <input type="time" class="form-control bg-dark text-white" id="start_time"  value="{{BatchInfo.StartTime}}" name="start_time">
+                        </div>
+                        <div class="col-4">
+                            <label for="end_time" class="form-label text-white">End Time</label>
+                            <input type="time" class="form-control bg-dark text-white" id="end_time"  value="{{BatchInfo.EndTime}}" name="end_time">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" style="background-color: chocolate;">Save Batch</button>
+                </div>
+            </div>
+        </form>
+        <h1>{{BatchInfo.StartDate}}</h1>
+{% endif %}
     {% endif %}
 {% endblock %}
