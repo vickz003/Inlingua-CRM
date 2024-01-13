@@ -3,6 +3,7 @@
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.core.validators import FileExtensionValidator
 
 class CustomUserManager(BaseUserManager):
     def _create_user(self, email = None, password=None, **extra_fields):
@@ -58,7 +59,14 @@ class Courses(models.Model):
     EndTime = models.TimeField(null=False, blank=False)
     LevelID = models.ForeignKey(Level, on_delete=models.CASCADE)
     Cost = models.IntegerField()
-    Course_metirials = models.FileField(blank=True, null=True)
+    Course_metirials = models.FileField(
+        upload_to='static/uploads/Stady_metirials',
+        blank=True,
+        null=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['pdf', 'xls', 'xlsx',])
+        ]
+    )
     Course_status = models.IntegerField(default=0)
     CreatedDate = models.DateTimeField(default=timezone.now)
     CreatedBy = models.CharField(max_length=255)
@@ -187,11 +195,11 @@ class TrainingBatches(models.Model):
     Course_details = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True, blank=True)
     TrainerId = models.ForeignKey(TrainingStaff, on_delete=models.CASCADE, null=True, blank=True)
     MeetingURL = models.CharField(max_length=500)
-    StartDate = models.DateTimeField()
-    EndDate = models.DateTimeField()
+    StartDate = models.DateField()
+    EndDate = models.DateField()
     Duration = models.IntegerField()
-    StartTime = models.DateTimeField()
-    EndTime = models.DateTimeField()
+    StartTime = models.TimeField()
+    EndTime = models.TimeField()
     IsActive = models.BooleanField()
     CreatedBy = models.CharField(max_length=255)
     CreatedDate = models.DateTimeField(default=timezone.now)
