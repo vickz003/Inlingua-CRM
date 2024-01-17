@@ -46,7 +46,7 @@ def add_batchs(request):
                     Courses_Details = request.POST['Courses_Details']
                     Trainer = request.POST['Trainer']
                     gmeeturl = request.POST['gmeeturl']
-                    satrdate = request.POST['satrdate']
+                    stardate = request.POST['satrdate']
                     EndDate = request.POST['EndDate']
                     classduraition = request.POST['classduraition']
                     start_time = request.POST['start_time']
@@ -61,7 +61,7 @@ def add_batchs(request):
                         Course_details = Courses_Details,
                         TrainerId = Trainer,
                         MeetingURL = gmeeturl,
-                        StartDate = satrdate,
+                        StartDate = stardate,
                         EndDate = EndDate,
                         Duration = classduraition,
                         StartTime = start_time,
@@ -75,7 +75,8 @@ def add_batchs(request):
                     new_batch.save()
                     return redirect('courceandlevels_table')
                 else:
-                    pass
+                    print("yes")
+                    return redirect('courceandlevels_table')
             else:
                 print("Yes iam 2")
         else:
@@ -92,14 +93,84 @@ def edit_batchs(request,id):
         if user.is_staff:
             if request.user.is_superuser:
                 if request.method == 'POST':
-                    pass
+                    batchname = request.POST['batchname']
+                    Courses_Details = request.POST['Courses_Details']
+                    Trainer = request.POST['Trainer']
+                    gmeeturl = request.POST['gmeeturl']
+                    stardate = request.POST['satrdate']
+                    EndDate = request.POST['EndDate']
+                    classduraition = request.POST['classduraition']
+                    start_time = request.POST['start_time']
+                    end_time = request.POST['end_time']
+                    
+                    Courses_Details = Courses.objects.get(ID = int(Courses_Details))
+                    Trainer = TrainingStaff.objects.get(ID = int(Trainer))
+                    # stardate = datetime.strptime(stardate, "%b. %d, %Y")
+                    # stardate = stardate.strftime("%Y-%m-%d")
+                    # EndDate = datetime.strptime(EndDate, "%b. %d, %Y")
+                    # EndDate = EndDate.strftime("%Y-%m-%d")
+
+                    updatebatch = TrainingBatches.objects.get(ID = id)
+                    updatebatch.Name = batchname
+                    updatebatch.Course_details = Courses_Details
+                    updatebatch.TrainerId = Trainer
+                    updatebatch.MeetingURL = gmeeturl
+                    updatebatch.Duration = classduraition
+                    updatebatch.UpdatedBy=user.name
+                    updatebatch.UpdatedDate= datetime.datetime.now()
+
+                    updatebatch.save()
+                    
+
+                    return redirect('courceandlevels_table')
                 else:
                     batch_info = TrainingBatches.objects.get(ID=id)
-                    All_courses = Courses.objects.all()
-                    training_staff = TrainingStaff.objects.all()
-
-                    context = {'id': id, 'BatchInfo': batch_info,'All_courses':All_courses, 'training_staff':training_staff}
+                    all_course = Courses.objects.all()
+                    all_Trainer = TrainingStaff.objects.all()
+                    
+                    context = {'id': id, 'BatchInfo': batch_info, 'all_course':all_course, 'all_Trainer':all_Trainer}
                     context['url_with_id'] = reverse('edit_batchs', kwargs={'id': id})
+                    return render(request, "inlingua/courceandlevels.html", context)
+            else:
+                return redirect('login_page')
+        else:
+            pass
+
+def edit_cources(request,id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+
+        if user.is_staff:
+            if request.user.is_superuser:
+                if request.method == 'POST':
+                    pass
+                else:
+                    course_info = Courses.objects.get(ID=id)
+                    all_language = Languages.objects.all()
+                    all_level = Level.objects.all()
+
+                    context = {'id': id, 'course_info': course_info, 'all_language':all_language, 'all_level':all_level}
+                    context['url_with_id'] = reverse('edit_cources', kwargs={'id': id})
+                    return render(request, "inlingua/courceandlevels.html", context)
+            else:
+                return redirect('login_page')
+        else:
+            pass
+
+def edit_level(request,id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+
+        if user.is_staff:
+            if request.user.is_superuser:
+                if request.method == 'POST':
+                    pass
+                else:
+                    level_info = Level.objects.get(ID=id)
+                    context = {'id': id, 'level_info': level_info}
+                    context['url_with_id'] = reverse('edit_level', kwargs={'id': id})
                     return render(request, "inlingua/courceandlevels.html", context)
             else:
                 return redirect('login_page')

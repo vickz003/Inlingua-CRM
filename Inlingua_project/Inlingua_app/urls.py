@@ -26,6 +26,10 @@ urlpatterns = [
 
     path('crm/courceandlevels_table', courceandlevels.table_page, name="courceandlevels_table"),
     path('crm/courceandlevels_table/batchs/<int:id>', courceandlevels.edit_batchs, name="edit_batchs"),
+    path('crm/courceandlevels_table/cources/<int:id>', courceandlevels.edit_cources, name="edit_cources"),
+    path('crm/courceandlevels_table/level/<int:id>', courceandlevels.edit_level, name="edit_level"),
+
+
     path('crm/courceandlevels_table/add_level', courceandlevels.add_level, name="add_level"),
     path('crm/courceandlevels_table/add_course', courceandlevels.add_course, name="add_course"),
     path('crm/courceandlevels_table/add_batchs', courceandlevels.add_batchs, name="add_batchs"),
