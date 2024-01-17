@@ -276,7 +276,7 @@ Home page | Inlingua
                 <div class="modal-header">
                     <h5 class="modal-title text-white" id="staticBackdropLabel">
                         {% if BatchInfo %}
-                            Edit Batch {{BatchInfo.TrainerId.Name}}
+                            Edit Batch
                         {% elif course_info %}
                             Edit Coures 
                         {% elif level_info %}
@@ -304,7 +304,8 @@ Home page | Inlingua
                             {% elif level_info %}
                                 value="{{level_info.Name}}"
                             {% endif %}
-                                name="name_value">
+
+                            name="batchname">
                         </div>
 
                         {% if BatchInfo %}
@@ -347,7 +348,7 @@ Home page | Inlingua
                                 {% if BatchInfo.TrainerId.Name == Trainer.Name %}
                                         selected
                                 {% endif %}
-                                value="{{training.ID}}">{{Trainer.Name}}</option>
+                                value="{{Trainer.ID}}">{{Trainer.Name}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -396,7 +397,7 @@ Home page | Inlingua
                                     class="progress-bar"
                                     role="progressbar"
                                     style="width: {{course_info.Course_status}}%;
-                                    background-color: #444444;"
+                                    background-color: chocolate;"
                                     aria-valuenow="25"
                                     aria-valuemin="0"
                                     aria-valuemax="100"
@@ -452,7 +453,7 @@ Home page | Inlingua
                             {% if BatchInfo %}
                                 value="{{BatchInfo.Duration}}"
                             {% elif course_info %}
-                                value="{{course_info.Duration}} Days"
+                                value="{{course_info.Duration}}"
                             {% endif %}
                             name="classduraition" readonly>
                         </div>
@@ -487,7 +488,7 @@ Home page | Inlingua
                             {% elif level_info %}
                                 value="{{level_info.CreatedBy}}"
                             {% endif %}
-                            name="classduraition" readonly>
+                            readonly>
                         </div>
                         <div class="col-4">
                             <label for="start_time" class="form-label text-white">CreatedDate</label>
@@ -499,7 +500,7 @@ Home page | Inlingua
                             {% elif level_info %}
                                 value="{{level_info.CreatedDate}}"
                             {% endif %}
-                            name="start_time" readonly>
+                            readonly>
                         </div>
                         <div class="col-4">
                             <label for="classduraition" class="form-label text-white">UpdatedBy</label>
@@ -511,7 +512,7 @@ Home page | Inlingua
                             {% elif level_info %}
                                 value="{{level_info.UpdatedBy}}"
                             {% endif %}
-                            name="classduraition" readonly>
+                            readonly>
                         </div>
                         <div class="col-4">
                             <label for="end_time" class="form-label text-white">UpdatedDate</label>
@@ -523,14 +524,21 @@ Home page | Inlingua
                             {% elif level_info %}
                                 value="{{level_info.UpdatedDate}}"
                             {% endif %}
-                            name="end_time" readonly>
+                            readonly>
                         </div>
                         
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger" style="background-color: chocolate;">Upload Batch</button>
+                    <button type="submit" class="btn btn-danger" style="background-color: chocolate;">Update 
+                    {% if BatchInfo %}
+                        Batch
+                    {% elif course_info %}
+                        Course
+                    {% elif level_info %}
+                        Level
+                    {% endif %}</button>
                 </div>
             </div>
         </form>
