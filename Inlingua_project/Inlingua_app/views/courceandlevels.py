@@ -95,11 +95,52 @@ def edit_batchs(request,id):
                     pass
                 else:
                     batch_info = TrainingBatches.objects.get(ID=id)
-                    All_courses = Courses.objects.all()
-                    training_staff = TrainingStaff.objects.all()
-
-                    context = {'id': id, 'BatchInfo': batch_info,'All_courses':All_courses, 'training_staff':training_staff}
+                    all_course = Courses.objects.all()
+                    all_Trainer = TrainingStaff.objects.all()
+                    
+                    context = {'id': id, 'BatchInfo': batch_info, 'all_course':all_course, 'all_Trainer':all_Trainer}
                     context['url_with_id'] = reverse('edit_batchs', kwargs={'id': id})
+                    return render(request, "inlingua/courceandlevels.html", context)
+            else:
+                return redirect('login_page')
+        else:
+            pass
+
+def edit_cources(request,id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+
+        if user.is_staff:
+            if request.user.is_superuser:
+                if request.method == 'POST':
+                    pass
+                else:
+                    course_info = Courses.objects.get(ID=id)
+                    all_language = Languages.objects.all()
+                    all_level = Level.objects.all()
+
+                    context = {'id': id, 'course_info': course_info, 'all_language':all_language, 'all_level':all_level}
+                    context['url_with_id'] = reverse('edit_cources', kwargs={'id': id})
+                    return render(request, "inlingua/courceandlevels.html", context)
+            else:
+                return redirect('login_page')
+        else:
+            pass
+
+def edit_level(request,id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+
+        if user.is_staff:
+            if request.user.is_superuser:
+                if request.method == 'POST':
+                    pass
+                else:
+                    level_info = Level.objects.get(ID=id)
+                    context = {'id': id, 'level_info': level_info}
+                    context['url_with_id'] = reverse('edit_level', kwargs={'id': id})
                     return render(request, "inlingua/courceandlevels.html", context)
             else:
                 return redirect('login_page')
