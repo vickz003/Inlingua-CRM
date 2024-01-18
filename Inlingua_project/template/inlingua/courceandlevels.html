@@ -325,7 +325,7 @@ Home page | Inlingua
                         {% elif course_info %}
                         <div class="col-4">
                             <label for="Courses_Details" class="form-label text-white">Level</label>
-                            <select class="form-select form-select bg-dark text-white" id="Courses_Details" name="Courses_Details">
+                            <select class="form-select form-select bg-dark text-white" id="Courses_Details" name="Level_Details">
                                 <option selected>Select a Level</option>
                                 {% for level in all_level %}
                                     <option value="{{ level.ID }}"
@@ -355,7 +355,7 @@ Home page | Inlingua
                         {% elif course_info %}
                         <div class="col-4">
                             <label for="Trainer" class="form-label text-white">Language</label>
-                            <select class="form-select form-select bg-dark text-white" name="Trainer" id="Trainer">
+                            <select class="form-select form-select bg-dark text-white" name="language_details" id="Trainer">
                                 <option selected>Select a Language</option>
                                 {% for language in all_language %}
                                 <option
@@ -381,12 +381,15 @@ Home page | Inlingua
                             <input type="text" class="form-control bg-dark text-white" id="gmeeturl" 
                             {% if BatchInfo %}
                                 value="{{BatchInfo.MeetingURL}}"
+                                readonly
                             {% elif course_info %}
-                                value="{{course_info.Description}}" 
+                                value="{{course_info.Description}}"
+                                readonly
                             {% elif level_info %}
                                 value="{{level_info.Code}}"
                             {% endif %}
-                            name="gmeeturl" readonly>
+                            name="gmeeturl" 
+                            >
                         </div>
 
                         {% if course_info %}

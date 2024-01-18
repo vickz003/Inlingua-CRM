@@ -144,7 +144,21 @@ def edit_cources(request,id):
         if user.is_staff:
             if request.user.is_superuser:
                 if request.method == 'POST':
-                    pass
+                    coursename = request.POST['batchname']
+                    level = request.POST['Level_Details']
+                    language = request.POST['language_details']
+
+                    level = Level.objects.get(ID = int(level))
+                    language = Languages.objects.get(ID = int(language))
+
+                    updatecorse = Courses.objects.get(ID = id)
+                    updatecorse.Name = coursename
+                    updatecorse.LevelID = level
+                    updatecorse.LanguageID = language
+                    updatecorse.UpdatedBy=user.name
+                    updatecorse.UpdatedDate= datetime.datetime.now()
+                    updatecorse.save()
+                    return redirect('courceandlevels_table')
                 else:
                     course_info = Courses.objects.get(ID=id)
                     all_language = Languages.objects.all()
@@ -166,7 +180,16 @@ def edit_level(request,id):
         if user.is_staff:
             if request.user.is_superuser:
                 if request.method == 'POST':
-                    pass
+                    level_name = request.POST['batchname']
+                    level_code = request.POST['gmeeturl']
+
+                    level_updated = Level.objects.get(ID=id)
+                    level_updated.Name = level_name
+                    level_updated.Code = level_code
+                    level_updated.UpdatedBy = user.name
+                    level_updated.UpdatedDate = datetime.datetime.now()
+                    level_updated.save()
+                    return redirect('courceandlevels_table')
                 else:
                     level_info = Level.objects.get(ID=id)
                     context = {'id': id, 'level_info': level_info}
