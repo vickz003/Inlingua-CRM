@@ -5,8 +5,11 @@ from .models import (
     Languages, Level, Courses, PaymentTypes, Payments,
     UserRoles, User, ManagementStaff, TrainingStaff, TrainerQualifications,
     ProofOfIdentty, TrainingBatches, StudentBatchAllocation, CourseStatus,
-    StudentDetails, StudentStudyMetirials
+    StudentDetails, StudentStudyMetirials, PaymentStatus
 )
+@admin.register(PaymentStatus)
+class PaymentStatusAdmin(admin.ModelAdmin):
+    pass
 
 @admin.register(Languages)
 class LanguagesAdmin(admin.ModelAdmin):

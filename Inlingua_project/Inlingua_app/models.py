@@ -75,6 +75,15 @@ class Courses(models.Model):
     
     def __str__(self):
         return self.Name
+    
+class PaymentStatus(models.Model):
+    ID = models.AutoField(primary_key=True)
+    StatusName = models.CharField(max_length=255)
+    CreatedDate = models.DateTimeField(default=timezone.now)
+    CreatedBy = models.CharField(max_length=255)
+    UpdatedDate = models.DateTimeField(default=timezone.now)
+    UpdatedBy = models.CharField(max_length=255)
+
 
 class PaymentTypes(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -92,6 +101,8 @@ class Payments(models.Model):
     PaymentDate = models.DateTimeField(default=timezone.now)
     TransactionId = models.CharField(max_length=100)
     TransactionStatusId = models.IntegerField()
+    Amount = models.DecimalField(max_digits=8, decimal_places=2,null=True, blank=True)
+    PaymentStatus = models.ForeignKey(PaymentStatus, on_delete=models.CASCADE,null=True, blank=True)
     IsDiscountApplied = models.BooleanField()
     DiscountedPayment = models.IntegerField(default=0)
     CreatedBy = models.CharField(max_length=255)
@@ -222,6 +233,7 @@ class StudentDetails(models.Model):
     ID = models.AutoField(primary_key=True)
     StudentID = models.ForeignKey(User, on_delete=models.CASCADE)
     BatchID = models.ForeignKey(TrainingBatches, on_delete=models.CASCADE)
+    PaymentDetails = models.ForeignKey(Payments, on_delete=models.CASCADE, null=True, blank=True)
     CreatedBy = models.CharField(max_length=255)
     CreatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255, null=True, blank=True)
