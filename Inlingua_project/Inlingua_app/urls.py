@@ -17,13 +17,26 @@ urlpatterns = [
     path('crm/tables/language/<int:id>', lng.edit_lang, name="edit_lang"),
     path('crm/tables/language/delete/<int:id>', lng.delete_langu, name="delete_langu"),
 
-    # courece and Levels urls-------------------------------------------------
+    # batch courece and Levels urls-------------------------------------------------
 
     path('crm/courceandlevels_table', courceandlevels.table_page, name="courceandlevels_table"),
+<<<<<<< HEAD
     # path('crm/tables/addlanguage', lng.language_view, name="language"),
     # path('crm/tables/addlanguage/add', lng.add_language, name="add_language"),
     # path('crm/tables/language/<int:id>', lng.edit_lang, name="edit_lang"),
     # path('crm/tables/language/delete/<int:id>', lng.delete_langu, name="delete_langu"),
+=======
+    path('crm/courceandlevels_table/batchs/<int:id>', courceandlevels.edit_batchs, name="edit_batchs"),
+    path('crm/courceandlevels_table/cources/<int:id>', courceandlevels.edit_cources, name="edit_cources"),
+    path('crm/courceandlevels_table/level/<int:id>', courceandlevels.edit_level, name="edit_level"),
+
+
+    path('crm/courceandlevels_table/add_level', courceandlevels.add_level, name="add_level"),
+    path('crm/courceandlevels_table/add_course', courceandlevels.add_course, name="add_course"),
+    path('crm/courceandlevels_table/add_batchs', courceandlevels.add_batchs, name="add_batchs"),
+    
+
+>>>>>>> f721ceb2180f85969f2b1b79a56a91dc9bc4d330
     path('crm/tables/addrole',roles.role_view, name="roles"),
     path('crm/tables/addrole/add',roles.add_role, name="add_roles"),
     path('crm/tables/roles/<int:id>', roles.edit_view, name="etit_view"),
