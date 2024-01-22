@@ -87,11 +87,13 @@ Home page | Inlingua
             </tr>
         </thead>
         <tbody>
-            {% for Student in Student_details %}
+            {% for Student, latest_payment in zipped_data %}
             <tr style="width: 50px;">
                 <td><img src="{{ Student.StudentID.user_img }}" alt="img" width="30px"> {{Student.StudentID.name}} </td>
                 <td>
-                    <div class="progress" style="height: 7px;">
+                    <div class="progress" 
+                    style="height: 7px;
+                    background-color: #dbdbdb;">
                         <div class="progress-bar" role="progressbar"
                             style="width: 50%; height: 30px; background-color: #FF751A;"
                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -102,28 +104,15 @@ Home page | Inlingua
                         <p class="m-0 p-0" style="font-size: small;">{{Student.BatchID.Course_details.Course_status}} / 100</p>
                     </div>
                 </td>
-                <td> Rs. {{Student.PaymentDetails.Amount}} / Rs. {{Student.BatchID.Course_details.Cost}}</td>
+                <td> Rs. {{Student.BatchID.Course_details.Cost}}</td>
                 <td>{{Student.StudentID.date_joined}}</td>
-                <td ><a style="
-                    {% if Student.PaymentDetails.PaymentStatus.StatusName == 'Completed'  %}
-                    color:green;
-                    {% elif Student.PaymentDetails.PaymentStatus.StatusName == 'Pending'  %}
-                    color:Red;
+                <td ><a  href="{% url 'history' id=Student.ID %}">
+                    {% if latest_payment.PaymentStatus %}
+                    {{ latest_payment.PaymentStatus }}
                     {% else %}
-                    color:black;
-                    {% endif %}" 
-                    {% if Student.PaymentDetails.PaymentStatus.StatusName == 'Completed' or Student.PaymentDetails.PaymentStatus.StatusName == 'Pending' %}
-                    href="{% url 'history' id=Student.ID %}"
-                    {% else %}
-                    href="{% url 'payment' id=Student.ID %}"
+                    Not Paid Yet!
                     {% endif %}
-                    >
-                        {% if Student.PaymentDetails.PaymentStatus.StatusName %}
-                        {{Student.PaymentDetails.PaymentStatus.StatusName}} | See History
-                        {% else %}
-                        Not Paid Yet! | Pay Now
-                        {% endif %}
-                    </a></td>
+                </a></td>
             </tr>
             {% endfor %}
         </tbody>

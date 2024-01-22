@@ -1,7 +1,5 @@
 from django.urls import path
-from Inlingua_app.views import (login, home, register, logout, batchdetails, 
-                                user, tables, language as lng, roles, trainers, language_page,
-                                courceandlevels,payment)
+from Inlingua_app.views import (login, home, register, logout, batchdetails, user, tables, language as lng, roles, trainers, language_page, courceandlevels,payment)
 from django.contrib.auth import views as password_views
 
 

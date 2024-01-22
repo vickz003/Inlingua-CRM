@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from Inlingua_app.models import User, TrainingStaff, StudentDetails, UserRoles, StudentDetails, TrainingBatches
+from Inlingua_app.models import User, TrainingStaff, StudentDetails, UserRoles, StudentDetails, TrainingBatches, Payments
 import datetime
+from itertools import zip_longest
+
 def user_page(request):
     if request.user.is_authenticated:
         user_id = request.user.id
@@ -49,11 +51,24 @@ def user_page(request):
                     Student_details = StudentDetails.objects.all()
                     Training_staff = TrainingStaff.objects.all()
                     batches = TrainingBatches.objects.all()
-                    
+                    payments = Payments.objects.all()
+
+                    from django.db.models import Max
+                    latest_payments = Payments.objects.values('StudentDetails').annotate(last_updated=Max('UpdatedDate'))
+                    latest_payment_details = Payments.objects.filter(
+                        StudentDetails__in=[payment['StudentDetails'] for payment in latest_payments],
+                        UpdatedDate__in=[payment['last_updated'] for payment in latest_payments]
+                    )
+
+                    for payment_detail in latest_payment_details:
+                        print(f"Student: {payment_detail.StudentDetails}, Last Updated Date: {payment_detail.PaymentStatus}, Amount: {payment_detail.Amount}")
+
+
+                    zipped_data = zip_longest(Student_details, latest_payment_details)
                     context = {'User': user, 
                             'Training Staff': Training_staff, 
-                            'Student_details':Student_details,
                             'batches':batches,
+                            'zipped_data': zipped_data,
                             'Students':'active'}
                     return render(request, "inlingua/user.html",context)
 
