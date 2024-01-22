@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+Home page | Inlingua
+{% endblock %}
+{% block style %}
+{% endblock %}
+
+{% block container %}
+{% if user.is_superuser %}
+{% include 'inc/sidebar.html' %}
+
+<h3>Payment History {{id}}</h3>
+<hr>
+<p>Total Payment</p>
+<p>Balance Payment</p>
+
+{% endif %}
+{% endblock %}

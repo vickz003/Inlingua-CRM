@@ -84,6 +84,9 @@ class PaymentStatus(models.Model):
     UpdatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.StatusName
+
 
 class PaymentTypes(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -94,21 +97,40 @@ class PaymentTypes(models.Model):
     UpdatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return self.Name
+
+class PaymentMethod(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Name = models.CharField(max_length=20)
+    CreatedBy = models.CharField(max_length=255)
+    CreatedDate = models.DateTimeField(default=timezone.now)
+    UpdatedBy = models.CharField(max_length=255)
+    UpdatedDate = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.Name
+    
 class Payments(models.Model):
     ID = models.AutoField(primary_key=True)
+    StudentDetails = models.ForeignKey('StudentDetails', on_delete=models.CASCADE, null=True, blank=True)
     PaymentTypeId = models.ForeignKey(PaymentTypes, on_delete=models.CASCADE)
+    PaymentMethodId = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE,null=True, blank=True)
     CourseId = models.ForeignKey(Courses, on_delete=models.CASCADE)
     PaymentDate = models.DateTimeField(default=timezone.now)
     TransactionId = models.CharField(max_length=100)
-    TransactionStatusId = models.IntegerField()
     Amount = models.DecimalField(max_digits=8, decimal_places=2,null=True, blank=True)
     PaymentStatus = models.ForeignKey(PaymentStatus, on_delete=models.CASCADE,null=True, blank=True)
     IsDiscountApplied = models.BooleanField()
     DiscountedPayment = models.IntegerField(default=0)
+    Description = models.TextField(null=True, blank=True)
     CreatedBy = models.CharField(max_length=255)
     CreatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255, null=True, blank=True)
     UpdatedDate = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.StudentDetails)
 
 class UserRoles(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -238,6 +260,9 @@ class StudentDetails(models.Model):
     CreatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255, null=True, blank=True)
     UpdatedDate = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.StudentID.name)
 
 class CourseStatus(models.Model):
     ID = models.AutoField(primary_key=True)
