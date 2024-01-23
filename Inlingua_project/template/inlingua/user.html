@@ -8,80 +8,74 @@ Home page | Inlingua
 {% endblock %}
 
 {% block container %}
-<div class="container-fluid" style="position: relative;">
-    <div id="studentinputcontainer" class="container-fluid d-none d-flex align-items-center justify-content-center" style="width: 100wh; height: 89.5vh; position: absolute; top: 0; right: 0; z-index: 10; backdrop-filter: blur(3px);">
-        <div class="container-fluid  bg-dark p-5" style="border-radius: 5px;">
-            <div class="container-fluid d-flex align-items-center justify-content-between">
-                <h3 class="text-white"><i class='bx bx-user'></i> Student details</h3>
-                <i class='bx bx-x text-danger' id="studentinputcontainerclosebtn" style="font-size: 26px;"></i>
-            </div>
-            <form >
-                <div class="row g-3 mt-1">
-                    <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Student ID <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control text-white bg-dark" id="exampleFormControlInput1">
-                      </div>
-                    <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control text-white bg-dark" id="exampleFormControlInput1">
-                      </div>
-                      <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Last Name</label>
-                        <input type="text" class="form-control text-white bg-dark" id="exampleFormControlInput1">
-                      </div>
-                      
-                </div>
-                <div class="row g-3 mt-1">
-                    <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Email address <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control bg-dark text-white" id="exampleFormControlInput1">
-                      </div>
-                      <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Language <span class="text-danger">*</span></label>
-                        <select class="form-select form-select bg-dark text-white" name="" id="">
-                                <option selected>Select a Language</option>
-                                <option value="">New Delhi</option>
-                                <option value="">Istanbul</option>
-                                <option value="">Jakarta</option>
-                            </select>
-                        
-                      </div>
-                      <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Level <span class="text-danger">*</span></label>
-                        <select class="form-select form-select bg-dark text-white" name="" id="">
-                            <option selected>Select a Level</option>
-                            <option value="">New Delhi</option>
-                            <option value="">Istanbul</option>
-                            <option value="">Jakarta</option>
-                        </select>
-                      </div>
-                </div>
-                <div class="row g-3 mt-1">
-                      <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Photo</label>
-                        <input type="file" class="form-control bg-dark text-white" id="exampleFormControlInput1">
-                      </div>
-                      <div class="col-4">
-                        <label for="exampleFormControlInput1" class="form-label text-white">Password <span class="text-danger">*</span></label>
-                        <div style="position: relative;">
-                            <input type="text" class="form-control bg-dark text-white" id="exampleFormControlInput1" style="padding-right: 60px;">
-                            <p class="m-0 text-white" style="position: absolute; top: 20%; right: 5%;">Show</p>
-                        </div>
-                      </div>
-                      <div class="col-4 d-flex align-items-end">
-                        <input type="submit" class="btn btn-primary w-100" id="exampleFormControlInput1" value="Add student details">
-                      </div>
-                </div>
-              </form>
-        </div>
-    </div>
+
     {% if user.is_superuser %}
     {% include 'inc/sidebar.html' %}
+    <div style="position: relative; width: 100%; height: 100%;">
+            <div class="modal fade" id="addcourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="height: 100vh; width: 100%; backdrop-filter: blur(3px); position: absolute;" >
+                <div class="modal-dialog modal-lg">
+                    
+                    <form method='POST' action="">
+                        {% csrf_token %}
+                        <div class="modal-content bg-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-white" id="staticBackdropLabel">Add New Student</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-3 mt-1">
+                                    <div class="col-4">
+                                        <label for="studentname" class="form-label text-white">Student Name</label>
+                                        <input type="text" class="form-control text-white bg-dark" id="studentname" name="name">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="fname" class="form-label text-white">First Name</label>
+                                        <input type="text" class="form-control text-white bg-dark" id="fname" name="fname">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="lname" class="form-label text-white">Last Name</label>
+                                        <input type="text" class="form-control text-white bg-dark" id="lname" name="lname">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mt-1">
+                                    <div class="col-4">
+                                        <label for="mobilenumber" class="form-label text-white">Mobile Number</label>
+                                        <input type="number" class="form-control bg-dark text-white" id="mobilenumber" name="mobilenumber">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="gmail" class="form-label text-white">e-mail</label>
+                                        <input type="email" class="form-control bg-dark text-white" id="gmail" name="gmail">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="studentphoto" class="form-label text-white">Student Photo</label>
+                                        <input class="form-control bg-dark text-white" type="file" id="studentphoto" name="studentphoto">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mt-1">
+                                    <div class="col-4">
+                                        <label for="mobilenumber" class="form-label text-white">Batch Details</label>
+                                        <select class="form-control bg-dark text-white" name="Batchid" id="">
+                                            <option>Select Batch</option>
+                                            {% for batch in batches %}
+                                            <option value="{{batch.ID}}">{{batch.Name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger" style="background-color: chocolate;">Save Batch</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <!--Container Main start-->
     <h4 class="card-title">Student Table</h4>
-    <p id="addstudentbtn" class="card-description btn d-flex align-items-center justify-content-center" style="background: rgb(252,161,69);
-            background: linear-gradient(90deg, rgba(252,161,69,1) 0%, rgba(219,29,4,1) 100%); color: #FFF; width: fit-content;">
-            <i class='bx bx-plus' style="font-size: large;"></i> Add Student </p>
+    <button type="button" class="btn mb-3 text-white" data-bs-toggle="modal" data-bs-target="#addcourse" style="background-color: #FF751A;">
+        Add Student
+        </button>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -93,11 +87,13 @@ Home page | Inlingua
             </tr>
         </thead>
         <tbody>
-            {% for Student in Student_details %}
+            {% for Student, latest_payment in zipped_data %}
             <tr style="width: 50px;">
                 <td><img src="{{ Student.StudentID.user_img }}" alt="img" width="30px"> {{Student.StudentID.name}} </td>
                 <td>
-                    <div class="progress" style="height: 7px;">
+                    <div class="progress" 
+                    style="height: 7px;
+                    background-color: #dbdbdb;">
                         <div class="progress-bar" role="progressbar"
                             style="width: 50%; height: 30px; background-color: #FF751A;"
                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -108,39 +104,18 @@ Home page | Inlingua
                         <p class="m-0 p-0" style="font-size: small;">{{Student.BatchID.Course_details.Course_status}} / 100</p>
                     </div>
                 </td>
-                <td> Rs. {{Student.PaymentDetails.Amount}} / Rs. {{Student.BatchID.Course_details.Cost}}</td>
+                <td> Rs. {{Student.BatchID.Course_details.Cost}}</td>
                 <td>{{Student.StudentID.date_joined}}</td>
-                <td ><a style="
-                    {% if Student.PaymentDetails.PaymentStatus.StatusName == 'Completed'  %}
-                    color:green;
-                    {% elif Student.PaymentDetails.PaymentStatus.StatusName == 'Pending'  %}
-                    color:Red;
+                <td ><a  href="{% url 'history' id=Student.ID %}">
+                    {% if latest_payment.PaymentStatus %}
+                    {{ latest_payment.PaymentStatus }}
                     {% else %}
-                    color:black;
-                    {% endif %}" href="{{Student.PaymentDetails.PaymentStatus.ID}}">
-                {% if Student.PaymentDetails.PaymentStatus.StatusName %}
-                {{Student.PaymentDetails.PaymentStatus.StatusName}}
-                {% else %}
-                Not Paid Yet!
-                {% endif %}
-            </a></td>
+                    Not Paid Yet!
+                    {% endif %}
+                </a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% endif %}
-<script>
-
-const addstudentbtn = document.getElementById('addstudentbtn');
-const studentinputcontainer = document.getElementById('studentinputcontainer');
-const studentinputcontainerclosebtn = document.getElementById('studentinputcontainerclosebtn');
-
-addstudentbtn.addEventListener('click', () => {
-    studentinputcontainer.classList.remove('d-none')
-});
-studentinputcontainerclosebtn.addEventListener('click', () => {
-    studentinputcontainer.classList.add('d-none')
-});
-
-</script>
 {% endblock %}
