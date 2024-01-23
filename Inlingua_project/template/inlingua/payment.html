@@ -41,15 +41,6 @@ Home page | Inlingua
                     <input type="number" class="form-control bg-dark text-white mt-2" id="TransactionId" placeholder="000000000000" name="TransactionId">
                 </div>
                 <div class="form-group col-6 mt-2">
-                    <label for="PaymentStatus" class="text-white">Payment Status</label>
-                    <select class="form-control bg-dark text-white mt-2" id="PaymentStatus" name="PaymentStatus">
-                    <option >Select a Transaction Status</option>
-                    {% for item in paymentstatus %}
-                    <option value="{{item.ID}}">{{item.StatusName}}</option>
-                    {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-6 mt-2">
                     <label for="Amount" class="text-white">Amount</label>
                     <input type="number" class="form-control bg-dark text-white mt-2" id="Amount" placeholder="35000.00" name="Amount">
                 </div>

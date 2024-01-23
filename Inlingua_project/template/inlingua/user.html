@@ -72,7 +72,15 @@ Home page | Inlingua
             </div>
         </div>
     <!--Container Main start-->
-    <h4 class="card-title">Student Table</h4>
+    <h4 class="card-title">Student Student</h4>
+    <div class="row mb-3">
+        <div class="col-4 mt-3">
+            <div class="input-group">
+                <input type="search" class="form-control rounded" placeholder="Search Trainers" aria-label="Search" aria-describedby="search-addon" />
+                <input type="submit" class="btn text-white" value="Serach" style="background-color: #FF751A;">
+              </div>
+        </div>
+    </div>
     <button type="button" class="btn mb-3 text-white" data-bs-toggle="modal" data-bs-target="#addcourse" style="background-color: #FF751A;">
         Add Student
         </button>
@@ -89,7 +97,7 @@ Home page | Inlingua
         <tbody>
             {% for Student, latest_payment in zipped_data %}
             <tr style="width: 50px;">
-                <td><img src="{{ Student.StudentID.user_img }}" alt="img" width="30px"> {{Student.StudentID.name}} </td>
+                <td><a href="{% url 'studentdetails' id=Student.ID %}"><img src="{{ Student.StudentID.user_img }}" alt="img" width="30px"> {{Student.StudentID.name}}</a></td>
                 <td>
                     <div class="progress" 
                     style="height: 7px;

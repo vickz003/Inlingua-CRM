@@ -24,7 +24,6 @@ def payment_view(request,id):
                     PaymentMethodId   = request.POST.get('PaymentMethodId')
                     TransactionId  = request.POST.get('TransactionId')
                     Amount  = request.POST.get('Amount')
-                    Paymentstatus  = request.POST.get('PaymentStatus')
                     IsDiscountApplied  = request.POST.get('Discount')
                     DiscountedPayment  = request.POST.get('DiscountedPayment')
                     Description  = request.POST.get('Description')
@@ -50,7 +49,13 @@ def payment_view(request,id):
                     course = Courses.objects.get(ID = int(studentdetails.BatchID.Course_details.ID))
                     PaymentTypeId = PaymentTypes.objects.get(ID = int(PaymentTypeId))
                     PaymentMethodId = PaymentMethod.objects.get(ID = int(PaymentMethodId))
-                    Paymentstatus = PaymentStatus.objects.get(ID = int(Paymentstatus))
+
+                    if int(Amount) + int(total_amount) == int(Course_cost):
+                        Paymentstatus = PaymentStatus.objects.get(ID = 1)
+                        
+                    else:
+                        Paymentstatus = PaymentStatus.objects.get(ID = 2)
+                        
 
                     new_payment = Payments.objects.create(
                     StudentDetails = studentdetails,

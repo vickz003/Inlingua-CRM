@@ -10,6 +10,8 @@ urlpatterns = [
     path('crm/home', home.home, name="home"),
 
     path('crm/students', user.user_page, name="students"),
+    path('crm/student/<int:id>', user.student_details, name="studentdetails"),
+
     path('crm/students/payment/<int:id>', payment.payment_view, name='payment'),
     path('crm/students/payment/history/<int:id>', payment.history_view, name='history'),
 
