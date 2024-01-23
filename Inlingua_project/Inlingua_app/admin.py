@@ -5,8 +5,16 @@ from .models import (
     Languages, Level, Courses, PaymentTypes, Payments,
     UserRoles, User, ManagementStaff, TrainingStaff, TrainerQualifications,
     ProofOfIdentty, TrainingBatches, StudentBatchAllocation, CourseStatus,
-    StudentDetails, StudentStudyMetirials
+    StudentDetails, StudentStudyMetirials, PaymentStatus, PaymentMethod
 )
+@admin.register(PaymentStatus)
+class PaymentStatusAdmin(admin.ModelAdmin):
+    list_display = ['StatusName',]
+   
+
+@admin.register(PaymentMethod)
+class PaymentMethodAdmin(admin.ModelAdmin):
+    list_display=['Name',]
 
 @admin.register(Languages)
 class LanguagesAdmin(admin.ModelAdmin):

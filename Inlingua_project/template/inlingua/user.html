@@ -1,0 +1,121 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+Home page | Inlingua
+{% endblock %}
+{% block style %}
+{% endblock %}
+
+{% block container %}
+
+    {% if user.is_superuser %}
+    {% include 'inc/sidebar.html' %}
+    <div style="position: relative; width: 100%; height: 100%;">
+            <div class="modal fade" id="addcourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="height: 100vh; width: 100%; backdrop-filter: blur(3px); position: absolute;" >
+                <div class="modal-dialog modal-lg">
+                    
+                    <form method='POST' action="">
+                        {% csrf_token %}
+                        <div class="modal-content bg-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-white" id="staticBackdropLabel">Add New Student</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-3 mt-1">
+                                    <div class="col-4">
+                                        <label for="studentname" class="form-label text-white">Student Name</label>
+                                        <input type="text" class="form-control text-white bg-dark" id="studentname" name="name">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="fname" class="form-label text-white">First Name</label>
+                                        <input type="text" class="form-control text-white bg-dark" id="fname" name="fname">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="lname" class="form-label text-white">Last Name</label>
+                                        <input type="text" class="form-control text-white bg-dark" id="lname" name="lname">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mt-1">
+                                    <div class="col-4">
+                                        <label for="mobilenumber" class="form-label text-white">Mobile Number</label>
+                                        <input type="number" class="form-control bg-dark text-white" id="mobilenumber" name="mobilenumber">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="gmail" class="form-label text-white">e-mail</label>
+                                        <input type="email" class="form-control bg-dark text-white" id="gmail" name="gmail">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="studentphoto" class="form-label text-white">Student Photo</label>
+                                        <input class="form-control bg-dark text-white" type="file" id="studentphoto" name="studentphoto">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mt-1">
+                                    <div class="col-4">
+                                        <label for="mobilenumber" class="form-label text-white">Batch Details</label>
+                                        <select class="form-control bg-dark text-white" name="Batchid" id="">
+                                            <option>Select Batch</option>
+                                            {% for batch in batches %}
+                                            <option value="{{batch.ID}}">{{batch.Name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger" style="background-color: chocolate;">Save Batch</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <!--Container Main start-->
+    <h4 class="card-title">Student Table</h4>
+    <button type="button" class="btn mb-3 text-white" data-bs-toggle="modal" data-bs-target="#addcourse" style="background-color: #FF751A;">
+        Add Student
+        </button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> First name </th>
+                <th> Class Progress </th>
+                <th> Fee Amount </th>
+                <th> Join Date </th>
+                <th> Fee Status </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Student, latest_payment in zipped_data %}
+            <tr style="width: 50px;">
+                <td><img src="{{ Student.StudentID.user_img }}" alt="img" width="30px"> {{Student.StudentID.name}} </td>
+                <td>
+                    <div class="progress" 
+                    style="height: 7px;
+                    background-color: #dbdbdb;">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: 50%; height: 30px; background-color: #FF751A;"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="m-0 p-0" style="font-size: small;">{{Student.BatchID.Course_details.LanguageID.Name}}</p>
+                        <p class="m-0 p-0" style="font-size: small;">{{Student.BatchID.Course_details.Course_status}} / 100</p>
+                    </div>
+                </td>
+                <td> Rs. {{Student.BatchID.Course_details.Cost}}</td>
+                <td>{{Student.StudentID.date_joined}}</td>
+                <td ><a  href="{% url 'history' id=Student.ID %}">
+                    {% if latest_payment.PaymentStatus %}
+                    {{ latest_payment.PaymentStatus }}
+                    {% else %}
+                    Not Paid Yet!
+                    {% endif %}
+                </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

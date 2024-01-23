@@ -3,6 +3,7 @@
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.core.validators import FileExtensionValidator
 
 class CustomUserManager(BaseUserManager):
     def _create_user(self, email = None, password=None, **extra_fields):
@@ -25,6 +26,7 @@ class CustomUserManager(BaseUserManager):
 class Languages(models.Model):
     ID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=255)
+    IsActive = models.BooleanField(default=True)
     CreatedDate = models.DateTimeField(default=timezone.now)
     CreatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
@@ -44,9 +46,6 @@ class Level(models.Model):
 
     def __str__(self):
         return self.Name
-    
-
-    
 
 class Courses(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -60,7 +59,14 @@ class Courses(models.Model):
     EndTime = models.TimeField(null=False, blank=False)
     LevelID = models.ForeignKey(Level, on_delete=models.CASCADE)
     Cost = models.IntegerField()
-    Course_metirials = models.FileField(blank=True, null=True)
+    Course_metirials = models.FileField(
+        upload_to='static/uploads/Stady_metirials',
+        blank=True,
+        null=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['pdf', 'xls', 'xlsx',])
+        ]
+    )
     Course_status = models.IntegerField(default=0)
     CreatedDate = models.DateTimeField(default=timezone.now)
     CreatedBy = models.CharField(max_length=255)
@@ -69,6 +75,18 @@ class Courses(models.Model):
     
     def __str__(self):
         return self.Name
+    
+class PaymentStatus(models.Model):
+    ID = models.AutoField(primary_key=True)
+    StatusName = models.CharField(max_length=255)
+    CreatedDate = models.DateTimeField(default=timezone.now)
+    CreatedBy = models.CharField(max_length=255)
+    UpdatedDate = models.DateTimeField(default=timezone.now)
+    UpdatedBy = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.StatusName
+
 
 class PaymentTypes(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -79,19 +97,40 @@ class PaymentTypes(models.Model):
     UpdatedBy = models.CharField(max_length=255)
     UpdatedDate = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return self.Name
+
+class PaymentMethod(models.Model):
+    ID = models.AutoField(primary_key=True)
+    Name = models.CharField(max_length=20)
+    CreatedBy = models.CharField(max_length=255)
+    CreatedDate = models.DateTimeField(default=timezone.now)
+    UpdatedBy = models.CharField(max_length=255)
+    UpdatedDate = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.Name
+    
 class Payments(models.Model):
     ID = models.AutoField(primary_key=True)
+    StudentDetails = models.ForeignKey('StudentDetails', on_delete=models.CASCADE, null=True, blank=True)
     PaymentTypeId = models.ForeignKey(PaymentTypes, on_delete=models.CASCADE)
+    PaymentMethodId = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE,null=True, blank=True)
     CourseId = models.ForeignKey(Courses, on_delete=models.CASCADE)
     PaymentDate = models.DateTimeField(default=timezone.now)
     TransactionId = models.CharField(max_length=100)
-    TransactionStatusId = models.IntegerField()
+    Amount = models.DecimalField(max_digits=8, decimal_places=2,null=True, blank=True)
+    PaymentStatus = models.ForeignKey(PaymentStatus, on_delete=models.CASCADE,null=True, blank=True)
     IsDiscountApplied = models.BooleanField()
     DiscountedPayment = models.IntegerField(default=0)
+    Description = models.TextField(null=True, blank=True)
     CreatedBy = models.CharField(max_length=255)
     CreatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255, null=True, blank=True)
     UpdatedDate = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.StudentDetails)
 
 class UserRoles(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -108,6 +147,7 @@ class UserRoles(models.Model):
 
 class User(AbstractUser):
     name = models.CharField(max_length=225, blank=True, null=True)
+    Mobile_Number = models.IntegerField(null=True, blank=True)
     user_img = models.ImageField(upload_to='static/img/uploads/Profiles', blank=True, null=True)
     created_by = models.CharField(max_length=255)
     updated_by = models.CharField(max_length=255, null=True, blank=True)
@@ -188,11 +228,11 @@ class TrainingBatches(models.Model):
     Course_details = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True, blank=True)
     TrainerId = models.ForeignKey(TrainingStaff, on_delete=models.CASCADE, null=True, blank=True)
     MeetingURL = models.CharField(max_length=500)
-    StartDate = models.DateTimeField()
-    EndDate = models.DateTimeField()
+    StartDate = models.DateField()
+    EndDate = models.DateField()
     Duration = models.IntegerField()
-    StartTime = models.DateTimeField()
-    EndTime = models.DateTimeField()
+    StartTime = models.TimeField()
+    EndTime = models.TimeField()
     IsActive = models.BooleanField()
     CreatedBy = models.CharField(max_length=255)
     CreatedDate = models.DateTimeField(default=timezone.now)
@@ -215,10 +255,14 @@ class StudentDetails(models.Model):
     ID = models.AutoField(primary_key=True)
     StudentID = models.ForeignKey(User, on_delete=models.CASCADE)
     BatchID = models.ForeignKey(TrainingBatches, on_delete=models.CASCADE)
+    PaymentDetails = models.ForeignKey(Payments, on_delete=models.CASCADE, null=True, blank=True)
     CreatedBy = models.CharField(max_length=255)
     CreatedDate = models.DateTimeField(default=timezone.now)
     UpdatedBy = models.CharField(max_length=255, null=True, blank=True)
     UpdatedDate = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.StudentID.name)
 
 class CourseStatus(models.Model):
     ID = models.AutoField(primary_key=True)

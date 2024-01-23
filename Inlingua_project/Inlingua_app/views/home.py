@@ -9,7 +9,8 @@ def home(request):
 
         if user.is_staff:
             if user.is_superuser:
-                return render(request, 'inlingua/index.html')
+                Dashboard = "active"
+                return render(request, 'inlingua/index.html',{'User':user,'Dashboard':Dashboard})
                 # Handle superuser logic here (if needed)
             else:
                 trainer_details = TrainingStaff.objects.get(LoginId=user)
@@ -36,7 +37,6 @@ def home(request):
         elif user.is_active:
             student_details = StudentDetails.objects.get(StudentID=user)
             training_batches = TrainingBatches.objects.get(ID = student_details.BatchID.ID)
-            print(training_batches.ID)
             return render(request, 'inlingua/index.html', {
                 'user': user,
                 'student_details': student_details,
